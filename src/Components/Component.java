@@ -3,10 +3,14 @@ package Components;
 import java.util.HashMap;
 
 public abstract class Component {
-    String name = "";
     public Object[] parents = null;
 
-    public abstract void loadComponent(HashMap<String, Object> attributes);
+    public Component(HashMap<String, Object> attributes){
+
+    }
+
+    public void tryOverrideAttribute(String name, Object value){
+    }
 
     protected Object trySearchAttribute(String attribute, HashMap<String, Object> attributes) {
         if (attributes.keySet().contains(attribute)) {

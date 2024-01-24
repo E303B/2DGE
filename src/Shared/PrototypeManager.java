@@ -1,14 +1,126 @@
 package Shared;
 
 import java.util.ArrayList;
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 import Prototypes.Prototype;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.Path;
 
 public class PrototypeManager {
     public ArrayList<Prototype> prototypes;
+    public ArrayList<XMLPrototype> xmlPrototypes;
+
+    private void tryLoadPrototype(XMLPrototype prototype) {
+        try {
+            if (hasPrototype(prototype.id))
+                return;
+            Prototype newPrototype;
+            if (prototype.parent != "") {
+                if ((!hasPrototype(prototype.parent))) {
+                    if(!getIsParent(prototype, getXMLPrototype(prototype.parent)))
+                        tryLoadPrototype(getXMLPrototype(prototype.parent));
+                    else
+                        return;
+                }
+                newPrototype = (Prototype) Class.forName(prototype.type).getConstructor(String.class, ArrayList.class, String.class).newInstance(prototype.id,
+                        prototype.components, prototype.parent);
+            } else
+                newPrototype = (Prototype) Class.forName(prototype.type).getConstructor(String.class, ArrayList.class).newInstance(prototype.id,
+                        prototype.components);
+            prototypes.add(newPrototype);
+        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+                | InvocationTargetException | NoSuchMethodException | SecurityException
+                | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public final boolean hasPrototype(String name) {
+        for (Prototype prototype : prototypes) {
+            if (prototype.id == name)
+                return true;
+        }
+        return false;
+    }
+
+    public final Prototype getPrototype(String name) {
+        for (Prototype prototype : prototypes) {
+            if (prototype.id == name)
+                return prototype;
+        }
+        return null;
+    }
+
+    public final XMLPrototype getXMLPrototype(String name) {
+        for (XMLPrototype prototype : xmlPrototypes) {
+            if (prototype.id == name)
+                return prototype;
+        }
+        return null;
+    }
+
+    private final String readFile(String path) throws IOException {
+        return new String(Files.readAllBytes(Paths.get(path)));
+    }
+
+    private final String readFile(Path path) throws IOException {
+        return new String(Files.readAllBytes(path));
+    }
+
+    private final ArrayList<File> filterByFileExtension(File[] files, String extension) {
+        ArrayList<File> result = new ArrayList<File>();
+        for (File file : files) {
+            if (file.getName().endsWith("." + extension.toLowerCase())) {
+                result.add(file);
+            }
+        }
+        return result;
+    }
+
+    private ArrayList<File> getAllFilesInDirectory(String path) {
+        File directory = new File(path);
+        if (!(directory.exists() && directory.isDirectory()))
+            return null;
+        return filterByFileExtension(directory.listFiles(), "xml");
+    }
 
     public PrototypeManager(String path) {
-
+        ArrayList<File> files = getAllFilesInDirectory(path);
+        if (files == null) {
+            return;
+        }
+        xmlPrototypes = new ArrayList<XMLPrototype>();
+        prototypes = new ArrayList<Prototype>();
+        ArrayList<XMLPrototype> overridePrototypes = new ArrayList<XMLPrototype>();
+        for (File file : files) {
+            try {
+                ArrayList<XMLPrototype> filePrototypes = XMLPrototype.loadPrototypes(readFile(file.toPath()));
+                for (XMLPrototype prototype : filePrototypes) {
+                    if (prototype.override)
+                        overridePrototypes.add(prototype);
+                    else
+                        xmlPrototypes.add(prototype);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        for (XMLPrototype prototype : xmlPrototypes) {
+            tryLoadPrototype(prototype);
+        }
+        for (XMLPrototype prototype : overridePrototypes) {
+            try {
+                if (!hasPrototype(prototype.id))
+                    continue;
+                getPrototype(prototype.id).overideComponents(prototype.components);
+            } catch (IllegalArgumentException | SecurityException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public Prototype searchPrototypeById(String id) {
@@ -18,6 +130,16 @@ public class PrototypeManager {
             }
         }
         return null;
+    }
+
+    private boolean getIsParent(XMLPrototype child, XMLPrototype parent) {
+        if (child.parent == null) {
+            return false;
+        }
+        if (child.parent == parent.id) {
+            return true;
+        }
+        return getIsParent(getXMLPrototype(child.parent), parent);
     }
 
     private boolean getIsParent(Prototype child, Prototype parent) {
