@@ -1,0 +1,4 @@
+<GameObjectPrototype id="Test">
+    <VectorComponent></VectorComponent>
+    <TextureComponent></TextureComponent>
+</GameObjectPrototype>
