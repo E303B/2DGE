@@ -1,11 +1,15 @@
 package Shared;
 
 import java.util.ArrayList;
+
+import org.w3c.dom.NodeList;
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
-import Prototypes.Prototype;
+import Prototypes.*;
+import Components.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
@@ -21,16 +25,18 @@ public class PrototypeManager {
             Prototype newPrototype;
             if (prototype.parent != "") {
                 if ((!hasPrototype(prototype.parent))) {
-                    if(!getIsParent(prototype, getXMLPrototype(prototype.parent)))
+                    if (!getIsParent(prototype, getXMLPrototype(prototype.parent)))
                         tryLoadPrototype(getXMLPrototype(prototype.parent));
                     else
                         return;
                 }
-                newPrototype = (Prototype) Class.forName(prototype.type).getConstructor(String.class, ArrayList.class, String.class).newInstance(prototype.id,
-                        prototype.components, prototype.parent);
+                newPrototype = (Prototype) Class.forName("Prototypes." + prototype.type)
+                        .getConstructor(String.class, NodeList.class, String.class).newInstance(prototype.id,
+                                prototype.components, prototype.parent);
             } else
-                newPrototype = (Prototype) Class.forName(prototype.type).getConstructor(String.class, ArrayList.class).newInstance(prototype.id,
-                        prototype.components);
+                newPrototype = (Prototype) Class.forName("Prototypes." + prototype.type)
+                        .getConstructor(String.class, NodeList.class).newInstance(prototype.id,
+                                prototype.components);
             prototypes.add(newPrototype);
         } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
                 | InvocationTargetException | NoSuchMethodException | SecurityException
@@ -81,15 +87,15 @@ public class PrototypeManager {
         return result;
     }
 
-    private ArrayList<File> getAllFilesInDirectory(String path) {
+    private File[] getAllFilesInDirectory(String path) {
         File directory = new File(path);
         if (!(directory.exists() && directory.isDirectory()))
             return null;
-        return filterByFileExtension(directory.listFiles(), "xml");
+        return directory.listFiles();
     }
 
     public PrototypeManager(String path) {
-        ArrayList<File> files = getAllFilesInDirectory(path);
+        ArrayList<File> files = filterByFileExtension(getAllFilesInDirectory(path), "xml");
         if (files == null) {
             return;
         }
@@ -97,16 +103,12 @@ public class PrototypeManager {
         prototypes = new ArrayList<Prototype>();
         ArrayList<XMLPrototype> overridePrototypes = new ArrayList<XMLPrototype>();
         for (File file : files) {
-            try {
-                ArrayList<XMLPrototype> filePrototypes = XMLPrototype.loadPrototypes(readFile(file.toPath()));
-                for (XMLPrototype prototype : filePrototypes) {
-                    if (prototype.override)
-                        overridePrototypes.add(prototype);
-                    else
-                        xmlPrototypes.add(prototype);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+            ArrayList<XMLPrototype> filePrototypes = XMLPrototype.loadPrototypes(file);
+            for (XMLPrototype prototype : filePrototypes) {
+                if (prototype.override)
+                    overridePrototypes.add(prototype);
+                else
+                    xmlPrototypes.add(prototype);
             }
         }
         for (XMLPrototype prototype : xmlPrototypes) {

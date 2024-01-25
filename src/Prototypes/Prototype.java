@@ -8,8 +8,9 @@ import Components.Component;
 import Shared.XMLPrototype;
 import Shared.Start;
 import Types.BaseType;
-
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class Prototype {
     public ArrayList<Component> components;
@@ -17,21 +18,22 @@ public class Prototype {
     public Prototype parent;
     public Class<BaseType> assignedType;
 
-    protected HashMap<String, Object> getAttributesForNode(Node node) {
+    protected HashMap<String, Object> getAttributesForNode(Element node) {
         HashMap<String, Object> result = new HashMap<String, Object>();
         for (int i = 0; i < node.getChildNodes().getLength(); i++) {
-            Node child = node.getChildNodes().item(i);
-            result.put(child.getNodeName(), child.getChildNodes());
+            Element child = (Element) node.getChildNodes().item(i);
+            result.put(child.getTagName(), child.getChildNodes());
         }
         return result;
     }
 
-    public final void overideComponents(ArrayList<Node> components) {
-        for (Node component : components) {
+    public final void overideComponents(NodeList overrideComponents) {
+        for (int i=0;i<overrideComponents.getLength();i++) {
+            Element component = (Element) overrideComponents.item(i);
             try {
-                if (!hasComponent((Class<Component>) Class.forName(component.getNodeName()))) {
+                if (!hasComponent((Class<Component>) Class.forName(component.getTagName()))) {
 
-                    tryAddComponent((Component) Class.forName(component.getNodeName()).getConstructor()
+                    tryAddComponent((Component) Class.forName(component.getTagName()).getConstructor()
                             .newInstance(getAttributesForNode(component)));
 
                     continue;
@@ -42,9 +44,9 @@ public class Prototype {
                 e.printStackTrace();
                 continue;
             }
-            Component assignedComponent = getComponent(component.getNodeName());
-            for(int i=0;i<component.getChildNodes().getLength();i++){
-                Node attribute = component.getChildNodes().item(i);
+            Component assignedComponent = getComponent(component.getTagName());
+            for(int j=0;j<component.getChildNodes().getLength();j++){
+                Node attribute = component.getChildNodes().item(j);
                 assignedComponent.tryOverrideAttribute(attribute.getNodeName(), attribute.getNodeValue());
             }
         }
@@ -56,10 +58,11 @@ public class Prototype {
         return null;
     }
 
-    protected final void loadComponents(ArrayList<Node> components) {
-        for(Node component:components){
+    protected final void loadComponents(NodeList components) {
+        for(int i=0;i<components.getLength();i++){
+            Element component=(Element) components.item(i);
             try {
-                this.components.add((Component) Class.forName(component.getNodeName()).getConstructor().newInstance());
+                this.components.add((Component) Class.forName("Components."+component).getConstructor().newInstance());
             } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
                     | InvocationTargetException | NoSuchMethodException | SecurityException
                     | ClassNotFoundException e) {
@@ -68,14 +71,14 @@ public class Prototype {
         }
     }
 
-    public Prototype(String id, ArrayList<Node> components) {
+    public Prototype(String id, NodeList components) {
         this.id = id;
         this.parent = null;
         this.components = new ArrayList<Component>();
         loadComponents(components);
     }
 
-    public Prototype(String id, ArrayList<Node> components, String parent) {
+    public Prototype(String id, NodeList components, String parent) {
         this.id = id;
         this.parent = Start.mainRunner.mainSystem.prototypeManager.searchPrototypeById(parent, id);
         this.components = (ArrayList<Component>) this.parent.components.clone();
