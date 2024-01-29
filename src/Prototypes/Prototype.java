@@ -8,6 +8,7 @@ import Components.Component;
 import Shared.XMLPrototype;
 import Shared.Start;
 import Types.BaseType;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -58,14 +59,21 @@ public class Prototype {
         return null;
     }
 
+    private final HashMap<String, Object> getAttributesForNode(Node node){
+        HashMap<String, Object> result=new HashMap<>();
+        for(int i=0;i<node.getChildNodes().getLength();i++){
+            result.put(node.getChildNodes().item(i).getLocalName(), node.getChildNodes().item(i).getTextContent());
+        }
+        return result;
+    }
+
     protected final void loadComponents(NodeList components) {
         for(int i=0;i<components.getLength();i++){
-            Element component=(Element) components.item(i);
+            Node component=components.item(i);
             try {
-                this.components.add((Component) Class.forName("Components."+component).getConstructor().newInstance());
+                this.components.add((Component) Component.getComponentClass(component.getLocalName()).getConstructor(HashMap.class).newInstance(getAttributesForNode(component)));
             } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
-                    | InvocationTargetException | NoSuchMethodException | SecurityException
-                    | ClassNotFoundException e) {
+                    | InvocationTargetException | NoSuchMethodException | SecurityException e) {
                 e.printStackTrace();
             }
         }
@@ -113,10 +121,10 @@ public class Prototype {
         components.add(component);
     }
 
-    private static final Class<Prototype> getPrototypeClass(String name) {
-        for (Class prototypeClass : Prototype.class.getClasses()) {
+    public static final Class<Prototype> getPrototypeClass(String name) {
+        for (Class<?> prototypeClass : Prototype.class.getClasses()) {
             if (prototypeClass.getName() == name)
-                return prototypeClass;
+                return (Class<Prototype>) prototypeClass;
         }
         return Prototype.class;
     }

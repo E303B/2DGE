@@ -25,4 +25,12 @@ public abstract class Component {
         }
         return defaultValue;
     }
+    
+    public static final Class<Component> getComponentClass(String name){
+        for(Class<?> componentClass:Component.class.getClasses()){
+            if(componentClass.getName()==name)
+                return (Class<Component>) componentClass;
+        }
+        return Component.class;
+    }
 }

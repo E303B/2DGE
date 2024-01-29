@@ -30,17 +30,16 @@ public class PrototypeManager {
                     else
                         return;
                 }
-                newPrototype = (Prototype) Class.forName("Prototypes." + prototype.type)
+                newPrototype = (Prototype) Prototype.getPrototypeClass(prototype.type)
                         .getConstructor(String.class, NodeList.class, String.class).newInstance(prototype.id,
                                 prototype.components, prototype.parent);
             } else
-                newPrototype = (Prototype) Class.forName("Prototypes." + prototype.type)
+                newPrototype = (Prototype) Prototype.getPrototypeClass(prototype.type)
                         .getConstructor(String.class, NodeList.class).newInstance(prototype.id,
                                 prototype.components);
             prototypes.add(newPrototype);
         } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
-                | InvocationTargetException | NoSuchMethodException | SecurityException
-                | ClassNotFoundException e) {
+                | InvocationTargetException | NoSuchMethodException | SecurityException e) {
             e.printStackTrace();
         }
     }
