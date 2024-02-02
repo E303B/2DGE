@@ -4,10 +4,6 @@ import Components.TextureComponent;
 import Components.VectorComponent;
 import Types.BaseType;
 import Types.GameObject;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class GameObjectPrototype extends Prototype {
@@ -16,13 +12,13 @@ public class GameObjectPrototype extends Prototype {
 
     public GameObjectPrototype(String id, NodeList components) {
         super(id, components);
-        tryAddComponent(new VectorComponent(new HashMap<String, Object>()));
-        tryAddComponent(new TextureComponent(new HashMap<String, Object>()));
+        tryAddComponent(new VectorComponent());
+        tryAddComponent(new TextureComponent());
     }
 
     public GameObjectPrototype(String id, NodeList components, String parent) {
         super(id, components, parent);
-        tryAddComponent(new VectorComponent(new HashMap<String, Object>()));
-        tryAddComponent(new TextureComponent(new HashMap<String, Object>()));
+        tryAddComponent(new VectorComponent());
+        tryAddComponent(new TextureComponent());
     }
 }

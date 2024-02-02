@@ -1,13 +1,20 @@
 package Components;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+
+import org.w3c.dom.Node;
 
 public class ForceComponent extends Component {
-    Object[] parents = new Component[1];
+    public ArrayList<Object> parents = new ArrayList<Object>();
 
-    public ForceComponent(HashMap<String, Object> attributes) {
+    public ForceComponent(Node attributes) {
         super(attributes);
-        parents[0] = VectorComponent.class;
+        parents.add(VectorComponent.class);
+    }
+
+    public ForceComponent() {
+        super();
+        parents.add(VectorComponent.class);
     }
 
     float speedX = 0f, speedY = 0f;

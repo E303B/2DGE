@@ -1,25 +1,28 @@
 package Components;
 
-import java.util.HashMap;
+import org.w3c.dom.Node;
 
 public class VectorComponent extends Component {
     public float x, y;
 
-    public VectorComponent(HashMap<String, Object> attributes){
+    public VectorComponent(Node attributes) {
         super(attributes);
-        x = (float) trySearchAttribute("x", attributes, x);
-        y = (float) trySearchAttribute("y", attributes, y);
+        x = (float) trySearchAttribute("x", this.attributes, x);
+        y = (float) trySearchAttribute("y", this.attributes, y);
     }
 
+    public VectorComponent() {
+        super();
+    }
 
     @Override
-    public void tryOverrideAttribute(String name, Object value){
+    public void tryOverrideAttribute(String name, Object value) {
         switch (name) {
             case "x":
-                x=(float) value;
+                x = (float) value;
                 break;
             case "y":
-                y=(float) value;
+                y = (float) value;
                 break;
             default:
                 break;

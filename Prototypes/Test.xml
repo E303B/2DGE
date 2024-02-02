@@ -1,7 +1,7 @@
-<GameObjectPrototype id="Test">
-    <VectorComponent>
+<Prototypes.GameObjectPrototype id="Test">
+    <Components.VectorComponent>
         <x>0</x>
         <y>0</y>
-    </VectorComponent>
-    <TextureComponent></TextureComponent>
-</GameObjectPrototype>
+    </Components.VectorComponent>
+    <Components.TextureComponent></Components.TextureComponent>
+</Prototypes.GameObjectPrototype>

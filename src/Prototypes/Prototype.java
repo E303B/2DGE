@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import Components.Component;
+import Components.TextureComponent;
 import Shared.XMLPrototype;
 import Shared.Start;
 import Types.BaseType;
@@ -29,7 +30,7 @@ public class Prototype {
     }
 
     public final void overideComponents(NodeList overrideComponents) {
-        for (int i=0;i<overrideComponents.getLength();i++) {
+        for (int i = 0; i < overrideComponents.getLength(); i++) {
             Element component = (Element) overrideComponents.item(i);
             try {
                 if (!hasComponent((Class<Component>) Class.forName(component.getTagName()))) {
@@ -46,32 +47,32 @@ public class Prototype {
                 continue;
             }
             Component assignedComponent = getComponent(component.getTagName());
-            for(int j=0;j<component.getChildNodes().getLength();j++){
+            for (int j = 0; j < component.getChildNodes().getLength(); j++) {
                 Node attribute = component.getChildNodes().item(j);
                 assignedComponent.tryOverrideAttribute(attribute.getNodeName(), attribute.getNodeValue());
             }
         }
     }
 
-    protected final ArrayList<Component> loadClassComponents(String name){
-        if(Start.mainRunner.mainSystem.prototypeManager.hasPrototype(name))
+    protected final ArrayList<Component> loadClassComponents(String name) {
+        if (Start.mainRunner.mainSystem.prototypeManager.hasPrototype(name))
             return Start.mainRunner.mainSystem.prototypeManager.getPrototype(name).components;
         return null;
     }
 
-    private final HashMap<String, Object> getAttributesForNode(Node node){
-        HashMap<String, Object> result=new HashMap<>();
-        for(int i=0;i<node.getChildNodes().getLength();i++){
-            result.put(node.getChildNodes().item(i).getLocalName(), node.getChildNodes().item(i).getTextContent());
-        }
-        return result;
-    }
-
     protected final void loadComponents(NodeList components) {
-        for(int i=0;i<components.getLength();i++){
-            Node component=components.item(i);
+        for (int i = 0; i < components.getLength(); i++) {
+            Node component = components.item(i);
             try {
-                this.components.add((Component) Component.getComponentClass(component.getLocalName()).getConstructor(HashMap.class).newInstance(getAttributesForNode(component)));
+                if (component.getNodeType() == Node.ELEMENT_NODE) {
+                    String name = ((Element) component).getTagName();
+                    try {
+                        this.components.add((Component) (Component.getComponentClass(name)
+                                .getConstructor().newInstance()));
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
             } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
                     | InvocationTargetException | NoSuchMethodException | SecurityException e) {
                 e.printStackTrace();
@@ -122,11 +123,11 @@ public class Prototype {
     }
 
     public static final Class<Prototype> getPrototypeClass(String name) {
-        for (Class<?> prototypeClass : Prototype.class.getClasses()) {
-            if (prototypeClass.getName() == name)
-                return (Class<Prototype>) prototypeClass;
+        try {
+            return (Class<Prototype>) Class.forName(name);
+        } catch (ClassNotFoundException e) {
+            return Prototype.class;
         }
-        return Prototype.class;
     }
 
     public final Component getComponent(String name) {

@@ -1,32 +1,39 @@
 package Components;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+
+import org.w3c.dom.Node;
 
 public class TextureComponent extends Component {
     public String path = "Blank.png";
-    Object[] parents = new Component[1];
+    public ArrayList<Object> parents = new ArrayList<Object>();
     public float renderWidth, renderHeight = 1f;
 
-    public TextureComponent(HashMap<String, Object> attributes) {
+    public TextureComponent(Node attributes) {
         super(attributes);
-        parents[0] = VectorComponent.class;
-        path = (String) trySearchAttribute("path", attributes, path);
-        renderWidth = (float) trySearchAttribute("width", attributes, renderWidth);
-        renderHeight = (float) trySearchAttribute("height", attributes, renderHeight);
+        parents.add(VectorComponent.class);
+        path = (String) trySearchAttribute("path", this.attributes, path);
+        renderWidth = (float) trySearchAttribute("width", this.attributes, renderWidth);
+        renderHeight = (float) trySearchAttribute("height", this.attributes, renderHeight);
+    }
+
+    public TextureComponent() {
+        super();
+        parents.add(VectorComponent.class);
     }
 
     @Override
-    public void tryOverrideAttribute(String name, Object value){
+    public void tryOverrideAttribute(String name, Object value) {
         switch (name) {
             case "path":
-                path=(String) value;
+                path = (String) value;
                 break;
-        
+
             case "width":
-                renderWidth=(float) value;
+                renderWidth = (float) value;
                 break;
             case "height":
-                renderHeight=(float) value;
+                renderHeight = (float) value;
                 break;
             default:
                 break;

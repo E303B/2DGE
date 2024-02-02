@@ -38,6 +38,7 @@ public class PrototypeManager {
                         .getConstructor(String.class, NodeList.class).newInstance(prototype.id,
                                 prototype.components);
             prototypes.add(newPrototype);
+            System.out.println(newPrototype.getClass().getName());
         } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
                 | InvocationTargetException | NoSuchMethodException | SecurityException e) {
             e.printStackTrace();
