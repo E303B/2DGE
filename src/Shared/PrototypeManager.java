@@ -38,10 +38,11 @@ public class PrototypeManager {
                         .getConstructor(String.class, NodeList.class).newInstance(prototype.id,
                                 prototype.components);
             prototypes.add(newPrototype);
-            System.out.println(newPrototype.getClass().getName());
         } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
                 | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-            e.printStackTrace();
+            if (Start.logOnStart)
+                Start.mainRunner.mainLogger
+                        .error("Catch " + e.getClass().getName() + " while loading prototype " + prototype.id);
         }
     }
 
@@ -95,10 +96,14 @@ public class PrototypeManager {
     }
 
     public PrototypeManager(String path) {
+        if (Start.logOnStart)
+            Start.mainRunner.mainLogger.log("Init prototype manager");
         ArrayList<File> files = filterByFileExtension(getAllFilesInDirectory(path), "xml");
         if (files == null) {
             return;
         }
+        if (Start.logOnStart)
+            Start.mainRunner.mainLogger.log("Parsing prototypes");
         xmlPrototypes = new ArrayList<XMLPrototype>();
         prototypes = new ArrayList<Prototype>();
         ArrayList<XMLPrototype> overridePrototypes = new ArrayList<XMLPrototype>();
@@ -111,6 +116,8 @@ public class PrototypeManager {
                     xmlPrototypes.add(prototype);
             }
         }
+        if (Start.logOnStart)
+            Start.mainRunner.mainLogger.log("Prototypes parsed");
         for (XMLPrototype prototype : xmlPrototypes) {
             tryLoadPrototype(prototype);
         }
@@ -123,6 +130,8 @@ public class PrototypeManager {
                 e.printStackTrace();
             }
         }
+        if (Start.logOnStart)
+            Start.mainRunner.mainLogger.log("Finished prototype manager initialization");
     }
 
     public Prototype searchPrototypeById(String id) {

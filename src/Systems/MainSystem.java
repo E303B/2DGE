@@ -18,11 +18,15 @@ public class MainSystem {
     }
 
     public MainSystem(boolean autoload) {
+        if (Start.logOnStart)
+            Start.mainRunner.mainLogger.log("Init main system");
         prototypeManager = new PrototypeManager("./Prototypes");
         if (autoload) {
             autoloadSystems();
         } else
         loadAllSystems();
+        if (Start.logOnStart)
+            Start.mainRunner.mainLogger.log("Main system initialized");
     }
     
     private void autoloadSystems(){

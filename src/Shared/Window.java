@@ -18,6 +18,8 @@ public class Window extends JFrame {
     public BufferedImage renderBuf;
 
     public Window(String title, Image image) {
+        if (Start.logOnStart)
+            Start.mainRunner.mainLogger.log("Init window");
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle(title);
@@ -45,6 +47,8 @@ public class Window extends JFrame {
             }
 
         });
+        if (Start.logOnStart)
+            Start.mainRunner.mainLogger.log("Finished window initialization");
     }
 
     private void drawAll() {
