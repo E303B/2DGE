@@ -3,45 +3,12 @@ package Shared;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 public final class ConfigReader {
     private final String path = "config.ecf";
     private HashMap<String, Object> configValues;
     private ArrayList<String> unused;
     private LogManager logger;
-
-    private final String readFile(String path) throws IOException {
-        return new String(Files.readAllBytes(Paths.get(path)));
-    }
-
-    private boolean isInteger(String s) {
-        try {
-            Integer.parseInt(s);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
-
-    private boolean isBool(String s) {
-        try {
-            Boolean.parseBoolean(s);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
-
-    private boolean isFloat(String s) {
-        try {
-            Float.parseFloat(s);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
 
     private boolean isVar(String s) {
         return configValues.containsKey(s);
@@ -65,11 +32,11 @@ public final class ConfigReader {
                 logger.error(
                         "Char must end with \', but got " + value.charAt(value.length() - 1) + ". At " + keyString);
             }
-        } else if (isInteger(value))
+        } else if (Tools.isInteger(value))
             return Integer.parseInt(value);
-        else if (isFloat(value))
+        else if (Tools.isFloat(value))
             return Float.parseFloat(value);
-        else if (isBool(value))
+        else if (Tools.isBool(value))
             return Boolean.parseBoolean(value);
         else if (isVar(value))
             return getValue(value);
@@ -82,7 +49,7 @@ public final class ConfigReader {
         logger = Start.mainRunner.mainLogger;
         configValues = new HashMap<String, Object>();
         unused = new ArrayList<String>();
-        String[] lines = readFile(path).split("\n");
+        String[] lines = Tools.readFile(path).split("\n");
         for (String s : lines) {
             String line = s.trim();
             if (line.startsWith("//"))

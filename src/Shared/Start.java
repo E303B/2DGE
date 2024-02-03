@@ -2,15 +2,17 @@ package Shared;
 
 import java.awt.Image;
 import java.io.IOException;
+
+import Scripts.ScriptManager;
 import Systems.MainSystem;
 
 public final class Start implements Runnable {
     // Config data
     public static boolean logOnStart = false;
-    public static String logs = "log.txt", title = "2DGE";
+    public static String logs = "log.txt";
     public static Image icon = null;
     public static int limitTPS = 50;
-    public static String texturesPath, scriptsPath;
+    public static String texturesPath;
 
     // Main global objects
     public ConfigReader config;
@@ -18,6 +20,7 @@ public final class Start implements Runnable {
     public static Start mainRunner;
     public MainSystem mainSystem;
     public LogManager mainLogger;
+    public ScriptManager scriptManager;
 
     public static final int rnd(int min, int max) {
         double gen = (Math.random() * ((max - min) + 1)) + min;
@@ -52,16 +55,15 @@ public final class Start implements Runnable {
 
         // Loadings main config
         logOnStart = (boolean) config.getValue("logOnStart", true);
-        title = (String) config.getValue("title", "2DGE");
         limitTPS = (int) config.getValue("limitTPS", 1);
         texturesPath = (String) config.getValue("texturesPath", "");
-        scriptsPath = (String) config.getValue("scriptsPath", "");
 
         if (logOnStart)
             mainLogger.log("Init engine");
         // Other main global objects
-        mainWindow = new Window(title, icon);
+        mainWindow = new Window((String) config.getValue("title", "2DGE"), icon);
         mainSystem = new MainSystem();
+        scriptManager = new ScriptManager((String) config.getValue("scriptsPath", ""));
         mainSystem.init();
         if (logOnStart)
             mainLogger.log("Finished engine initialization with " + mainLogger.errors + " errors, "
@@ -70,6 +72,7 @@ public final class Start implements Runnable {
         long deltaTime = 0;
         int tps = 0;
         config.logConfigWarnings();
+        scriptManager.runScript("helloworld");
         // Main loop
         while (true) {
             deltaTime = System.currentTimeMillis() - previous;
