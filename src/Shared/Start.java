@@ -6,11 +6,14 @@ import Systems.MainSystem;
 
 public class Start implements Runnable {
 
-    public static final boolean logOnStart = false;
-    public static final String logs = "log.txt", title = "2DGE";
-    public static final Image icon = null;
+    public static boolean logOnStart = false;
+    public static String logs = "log.txt", title = "2DGE";
+    public static Image icon = null;
     public static int limitTPS = 50;
+    public static String texturesPath, scriptsPath;
 
+
+    public ConfigReader config;
     public Window mainWindow;
     public static Start mainRunner;
     public MainSystem mainSystem;
@@ -32,7 +35,6 @@ public class Start implements Runnable {
         mainWindow.repaint();
     }
 
-    @SuppressWarnings("unused")
     @Override
     public void run() {
         try {
@@ -40,6 +42,17 @@ public class Start implements Runnable {
         } catch (IOException e) {
             return;
         }
+        try {
+            config = new ConfigReader();
+        } catch (IOException e) {
+            mainLogger.error("Failed to read config");
+            return;
+        }
+        logOnStart = (boolean) config.getValue("logOnStart", true);
+        title = (String) config.getValue("title", "2DGE");
+        limitTPS = (int) config.getValue("limitTPS", 1);
+        texturesPath=(String) config.getValue("texturesPath", "");
+        scriptsPath=(String) config.getValue("scriptsPath", "");
         if (logOnStart)
             mainLogger.log("Init engine");
         mainWindow = new Window(title, icon);
@@ -51,6 +64,7 @@ public class Start implements Runnable {
         long previous = System.currentTimeMillis();
         long deltaTime = 0;
         int tps = 0;
+        config.logConfigWarnings();
         while (true) {
             deltaTime = System.currentTimeMillis() - previous;
             try {

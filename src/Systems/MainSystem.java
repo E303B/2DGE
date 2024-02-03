@@ -13,14 +13,14 @@ public class MainSystem {
     public ArrayList<BaseSystem> systems;
 
     public MainSystem() {
-        prototypeManager = new PrototypeManager("./Resources/Prototypes");
+        prototypeManager = new PrototypeManager((String) Start.mainRunner.config.getValue("prototypesPath"));
         loadAllSystems();
     }
 
     public MainSystem(boolean autoload) {
         if (Start.logOnStart)
             Start.mainRunner.mainLogger.log("Init main system");
-        prototypeManager = new PrototypeManager("./Resources/Prototypes");
+        prototypeManager = new PrototypeManager((String) Start.mainRunner.config.getValue("prototypesPath"));
         if (autoload) {
             autoloadSystems();
         } else

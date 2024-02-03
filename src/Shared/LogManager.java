@@ -9,10 +9,10 @@ public class LogManager {
     public int warnings, errors, logs;
 
     public LogManager(String path) throws IOException {
-        this.path=path;
+        this.path = path;
         logs = warnings = errors = 0;
     }
-    
+
     protected void write(String text) {
         try {
             FileWriter mainFileWriter = new FileWriter(path, true);
@@ -25,19 +25,19 @@ public class LogManager {
 
     public void log(String text) {
         logs++;
-        write("[LOG] " + LocalDateTime.now() + ": " + text+"\n");
+        write("[LOG] " + LocalDateTime.now() + ": " + text + "\n");
         System.out.println("[LOG] " + LocalDateTime.now() + ": " + text);
     }
 
     public void error(String text) {
         errors++;
-        write("[ERROR] " + LocalDateTime.now() + ": " + text);
+        write("[ERROR] " + LocalDateTime.now() + ": " + text + "\n");
         System.err.println("[ERROR] " + LocalDateTime.now() + ": " + text);
     }
 
     public void warning(String text) {
         warnings++;
-        write("[WARN] " + LocalDateTime.now() + ": " + text);
+        write("[WARN] " + LocalDateTime.now() + ": " + text + "\n");
         System.out.println("[WARN] " + LocalDateTime.now() + ": " + text);
     }
 }

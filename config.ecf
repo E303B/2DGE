@@ -1,0 +1,6 @@
+logOnStart=false
+title="2DGE"
+limitTPS=20
+texturesPath="./Resources/Textures"
+prototypesPath="./Resources/Prototypes"
+//scriptsPath="./Resources/Scripts"
