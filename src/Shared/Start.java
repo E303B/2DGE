@@ -5,11 +5,13 @@ import java.io.IOException;
 import Systems.MainSystem;
 
 public class Start implements Runnable {
-    public static final boolean logOnStart = false;
 
-    public Window mainWindow;
+    public static final boolean logOnStart = false;
     public static final String logs = "log.txt", title = "2DGE";
     public static final Image icon = null;
+    public static int limitTPS = 50;
+
+    public Window mainWindow;
     public static Start mainRunner;
     public MainSystem mainSystem;
     public LogManager mainLogger;
@@ -48,8 +50,21 @@ public class Start implements Runnable {
                     + mainLogger.warnings + " warnings");
         long previous = System.currentTimeMillis();
         long deltaTime = 0;
+        int tps = 0;
         while (true) {
             deltaTime = System.currentTimeMillis() - previous;
+            try {
+                tps = (int) Math.floor(1 / deltaTime);
+            } catch (ArithmeticException e) {
+                tps = limitTPS + 1;
+            }
+            if (tps >= limitTPS) {
+                try {
+                    Thread.sleep(1000 / limitTPS);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
             tick();
             previous = System.currentTimeMillis();
         }
