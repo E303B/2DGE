@@ -9,6 +9,9 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class DrawingSystem extends BaseSystem {
+    static {
+        BaseSystem.systems.add(DrawingSystem.class);
+    }
 
     @Override
     public void run() {

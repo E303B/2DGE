@@ -8,6 +8,9 @@ import Types.GameObject;
 
 public class GameObjectSystem extends BaseSystem {
     public ArrayList<GameObject> gameObjects;
+    static {
+        BaseSystem.systems.add(GameObjectSystem.class);
+    }
 
     public GameObjectSystem() {
         gameObjects = new ArrayList<GameObject>();

@@ -1,6 +1,8 @@
 package Systems;
 
 import java.util.ArrayList;
+import java.util.Set;
+
 import Shared.PrototypeManager;
 import Shared.Window;
 import Shared.Start;
@@ -15,6 +17,8 @@ public class MainSystem {
     public MainSystem() {
         prototypeManager = new PrototypeManager((String) Start.mainRunner.config.getValue("prototypesPath"));
         loadAllSystems();
+        if (Start.logOnStart)
+            Start.mainRunner.mainLogger.log("Main system initialized");
     }
 
     public MainSystem(boolean autoload) {
@@ -32,7 +36,7 @@ public class MainSystem {
     @SuppressWarnings({ "unchecked", "rawtypes" })
     private void autoloadSystems() {
         systems = new ArrayList<BaseSystem>();
-        for (Class system : BaseSystem.class.getClasses()) {
+        for (Class system : BaseSystem.systems) {
             try {
                 systems.add((BaseSystem) system.getDeclaredConstructor().newInstance());
             } catch (InstantiationException | IllegalAccessException | IllegalArgumentException

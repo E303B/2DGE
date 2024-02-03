@@ -8,6 +8,9 @@ import Components.TextureComponent;
 import Components.VectorComponent;
 
 public class TextureSystem extends BaseSystem {
+    static {
+        BaseSystem.systems.add(TextureSystem.class);
+    }
 
     @Override
     public void run() {
@@ -22,7 +25,7 @@ public class TextureSystem extends BaseSystem {
             int drawY = (int) ((vector.y - camera.cameraY) * camera.cameraSize)
                     + Start.mainRunner.mainWindow.getHeight() / 2;
             try {
-                drawer.renderImage(Start.texturesPath +"/"+ texture.path, drawX, drawY,
+                drawer.renderImage(Start.texturesPath + "/" + texture.path, drawX, drawY,
                         (int) (texture.renderWidth * camera.cameraSize),
                         (int) (texture.renderHeight * camera.cameraSize));
             } catch (IOException e) {
