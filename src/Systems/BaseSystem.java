@@ -9,4 +9,8 @@ public abstract class BaseSystem {
         if (Start.logOnStart)
             Start.mainRunner.mainLogger.log("Init " + this.getClass().getName());
     }
+
+    public void init(){
+
+    }
 }

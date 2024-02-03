@@ -58,6 +58,12 @@ public class MainSystem {
         return null;
     }
 
+    public void init(){
+        for (BaseSystem system : systems) {
+            system.init();
+        }
+    }
+
     @SuppressWarnings({ "rawtypes" })
     public BaseSystem getSystem(Class sys) {
         for (BaseSystem system : systems) {
