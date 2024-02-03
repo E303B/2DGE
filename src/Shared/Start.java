@@ -42,6 +42,7 @@ public class Start implements Runnable {
             mainLogger.log("Init engine");
         mainWindow = new Window(title, icon);
         mainSystem = new MainSystem();
+        mainSystem.init();
         if (logOnStart)
             mainLogger.log("Finished engine initialization with " + mainLogger.errors + " errors, "
                     + mainLogger.warnings + " warnings");

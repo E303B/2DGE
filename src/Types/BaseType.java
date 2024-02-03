@@ -7,15 +7,16 @@ import Prototypes.Prototype;
 
 public class BaseType {
     public ArrayList<Component> components;
-
+    public String prototypeId;
     @SuppressWarnings("unchecked")
     public BaseType(Prototype prototype) {
+        prototypeId=prototype.id;
         this.components = (ArrayList<Component>) prototype.components.clone();
     }
 
     public Component getComponent(String name) {
         for (Component i : components) {
-            if (i.getClass().getName() == name) {
+            if (i.getClass().getName().equals(name)) {
                 return i;
             }
         }

@@ -51,8 +51,9 @@ public class PrototypeManager {
 
     public final Prototype getPrototype(String name) {
         for (Prototype prototype : prototypes) {
-            if (prototype.id == name)
+            if (name.equals(prototype.id)) {
                 return prototype;
+            }
         }
         return null;
     }

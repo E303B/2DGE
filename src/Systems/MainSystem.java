@@ -44,6 +44,7 @@ public class MainSystem {
 
     private void loadAllSystems() {
         systems = new ArrayList<BaseSystem>();
+        systems.add(new DrawingSystem());
         systems.add(new GameObjectSystem());
         systems.add(new TextureSystem());
         systems.add(new CameraSystem());
@@ -58,7 +59,7 @@ public class MainSystem {
         return null;
     }
 
-    public void init(){
+    public void init() {
         for (BaseSystem system : systems) {
             system.init();
         }

@@ -11,12 +11,12 @@ public class TextureSystem extends BaseSystem {
 
     @Override
     public void run() {
-        CameraSystem camera = (CameraSystem) Start.mainRunner.mainSystem.getSystem("CameraSystem");
-        DrawingSystem drawer = (DrawingSystem) Start.mainRunner.mainSystem.getSystem("DrawingSystem");
+        CameraSystem camera = (CameraSystem) Start.mainRunner.mainSystem.getSystem("Systems.CameraSystem");
+        DrawingSystem drawer = (DrawingSystem) Start.mainRunner.mainSystem.getSystem("Systems.DrawingSystem");
         for (GameObject i : ((GameObjectSystem) Start.mainRunner.mainSystem
                 .getSystem(GameObjectSystem.class)).gameObjects) {
-            TextureComponent texture = (TextureComponent) i.getComponent("TextureComponent");
-            VectorComponent vector = (VectorComponent) i.getComponent("VectorComponent");
+            TextureComponent texture = (TextureComponent) i.getComponent("Components.TextureComponent");
+            VectorComponent vector = (VectorComponent) i.getComponent("Components.VectorComponent");
             int drawX = (int) ((vector.x - camera.cameraX) * camera.cameraSize)
                     + Start.mainRunner.mainWindow.getWidth() / 2;
             int drawY = (int) ((vector.y - camera.cameraY) * camera.cameraSize)
@@ -26,6 +26,7 @@ public class TextureSystem extends BaseSystem {
                         (int) (texture.renderWidth * camera.cameraSize),
                         (int) (texture.renderHeight * camera.cameraSize));
             } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
