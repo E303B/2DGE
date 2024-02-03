@@ -34,7 +34,7 @@ public final class ScriptManager {
 
     public boolean runScript(String name, Object params) {
         for (Script script : scripts) {
-            if (script.name == name) {
+            if (script.name.equals(name)) {
                 script.run(params);
                 return true;
             }
@@ -42,7 +42,7 @@ public final class ScriptManager {
         return false;
     }
 
-    public void runScript(String name) {
-        runScript(name, null);
+    public boolean runScript(String name) {
+        return runScript(name, null);
     }
 }
