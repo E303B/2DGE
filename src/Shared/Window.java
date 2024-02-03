@@ -20,11 +20,13 @@ public class Window extends JFrame {
     public Window(String title, Image image) {
         if (Start.logOnStart)
             Start.mainRunner.mainLogger.log("Init window");
+        //Window settings
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle(title);
         this.setIconImage(image != null ? image : getIconImage());
         this.setExtendedState(MAXIMIZED_BOTH);
+        //Keyboard support
         keysPressed = new ArrayList<>();
         this.addKeyListener(new KeyListener() {
 

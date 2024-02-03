@@ -4,15 +4,15 @@ import java.awt.Image;
 import java.io.IOException;
 import Systems.MainSystem;
 
-public class Start implements Runnable {
-
+public final class Start implements Runnable {
+    // Config data
     public static boolean logOnStart = false;
     public static String logs = "log.txt", title = "2DGE";
     public static Image icon = null;
     public static int limitTPS = 50;
     public static String texturesPath, scriptsPath;
 
-
+    // Main global objects
     public ConfigReader config;
     public Window mainWindow;
     public static Start mainRunner;
@@ -30,13 +30,14 @@ public class Start implements Runnable {
         new Thread(mainRunner).start();
     }
 
-    private void tick() {
+    private final void tick() {
         mainSystem.run();
         mainWindow.repaint();
     }
 
     @Override
     public void run() {
+        // File related global object
         try {
             mainLogger = new LogManager(logs);
         } catch (IOException e) {
@@ -48,13 +49,17 @@ public class Start implements Runnable {
             mainLogger.error("Failed to read config");
             return;
         }
+
+        // Loadings main config
         logOnStart = (boolean) config.getValue("logOnStart", true);
         title = (String) config.getValue("title", "2DGE");
         limitTPS = (int) config.getValue("limitTPS", 1);
-        texturesPath=(String) config.getValue("texturesPath", "");
-        scriptsPath=(String) config.getValue("scriptsPath", "");
+        texturesPath = (String) config.getValue("texturesPath", "");
+        scriptsPath = (String) config.getValue("scriptsPath", "");
+
         if (logOnStart)
             mainLogger.log("Init engine");
+        // Other main global objects
         mainWindow = new Window(title, icon);
         mainSystem = new MainSystem();
         mainSystem.init();
@@ -65,6 +70,7 @@ public class Start implements Runnable {
         long deltaTime = 0;
         int tps = 0;
         config.logConfigWarnings();
+        // Main loop
         while (true) {
             deltaTime = System.currentTimeMillis() - previous;
             try {
@@ -72,7 +78,8 @@ public class Start implements Runnable {
             } catch (ArithmeticException e) {
                 tps = limitTPS + 1;
             }
-            if (tps >= limitTPS) {
+            previous = System.currentTimeMillis();
+            if (limitTPS != 0 && tps >= limitTPS) {
                 try {
                     Thread.sleep(1000 / limitTPS);
                 } catch (InterruptedException e) {
@@ -80,7 +87,6 @@ public class Start implements Runnable {
                 }
             }
             tick();
-            previous = System.currentTimeMillis();
         }
     }
 }

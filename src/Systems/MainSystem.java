@@ -1,7 +1,6 @@
 package Systems;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 import Shared.PrototypeManager;
 import Shared.Window;
@@ -20,7 +19,7 @@ public class MainSystem {
         if (Start.logOnStart)
             Start.mainRunner.mainLogger.log("Main system initialized");
     }
-
+    
     public MainSystem(boolean autoload) {
         if (Start.logOnStart)
             Start.mainRunner.mainLogger.log("Init main system");
@@ -32,9 +31,11 @@ public class MainSystem {
         if (Start.logOnStart)
             Start.mainRunner.mainLogger.log("Main system initialized");
     }
-
+    
+    //Doesn`t recommend using this one
     @SuppressWarnings({ "unchecked", "rawtypes" })
     private void autoloadSystems() {
+        //TODO: Fix systemloading to auto
         systems = new ArrayList<BaseSystem>();
         for (Class system : BaseSystem.systems) {
             try {
@@ -48,6 +49,7 @@ public class MainSystem {
 
     private void loadAllSystems() {
         systems = new ArrayList<BaseSystem>();
+        //Add here all new systems
         systems.add(new DrawingSystem());
         systems.add(new GameObjectSystem());
         systems.add(new TextureSystem());
@@ -79,11 +81,16 @@ public class MainSystem {
         return null;
     }
 
+    //Runs every single system
     public void run() {
         Window window = Start.mainRunner.mainWindow;
         window.renderBuf = new BufferedImage(window.getWidth(), window.getHeight(), BufferedImage.TYPE_INT_RGB);
         for (BaseSystem system : systems) {
-            system.run();
+            try {
+                system.run();
+            } catch (Exception e) {
+                Start.mainRunner.mainLogger.error("Catch "+e.getClass().getName()+" while loading "+system.getClass().getName()+". Stacktrace: "+e.getMessage());
+            }
         }
     }
 }

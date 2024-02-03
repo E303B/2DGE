@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
+//Save all logs in specail file
 public class LogManager {
     public String path;
     public int warnings, errors, logs;

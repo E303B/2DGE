@@ -48,6 +48,7 @@ public final class ConfigReader {
     }
 
     private Object parseValue(String value, String keyString) {
+        //Add here every new config data type
         if (value.charAt(0) == '"') {
             if (value.charAt(value.length() - 1) == '"')
                 return value.substring(1, value.length() - 1);
