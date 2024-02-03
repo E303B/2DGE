@@ -22,7 +22,8 @@ public class TextureSystem extends BaseSystem {
             int drawY = (int) ((vector.y - camera.cameraY) * camera.cameraSize)
                     + Start.mainRunner.mainWindow.getHeight() / 2;
             try {
-                drawer.renderImage(texture.path, drawX, drawY, (int) (texture.renderWidth * camera.cameraSize),
+                drawer.renderImage("./Resources/Textures/" + texture.path, drawX, drawY,
+                        (int) (texture.renderWidth * camera.cameraSize),
                         (int) (texture.renderHeight * camera.cameraSize));
             } catch (IOException e) {
             }

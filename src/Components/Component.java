@@ -41,7 +41,7 @@ public abstract class Component {
         }
         return defaultValue;
     }
-
+    @SuppressWarnings({"unchecked"})
     public static final Class<Component> getComponentClass(String name) throws ClassNotFoundException {
         return (Class<Component>) Class.forName(name);
     }

@@ -5,14 +5,9 @@ import java.util.ArrayList;
 import org.w3c.dom.NodeList;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 import Prototypes.*;
-import Components.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.Path;
 
 public class PrototypeManager {
     public ArrayList<Prototype> prototypes;
@@ -68,14 +63,6 @@ public class PrototypeManager {
                 return prototype;
         }
         return null;
-    }
-
-    private final String readFile(String path) throws IOException {
-        return new String(Files.readAllBytes(Paths.get(path)));
-    }
-
-    private final String readFile(Path path) throws IOException {
-        return new String(Files.readAllBytes(path));
     }
 
     private final ArrayList<File> filterByFileExtension(File[] files, String extension) {

@@ -3,12 +3,12 @@ package Types;
 import java.util.ArrayList;
 
 import Components.Component;
-import Prototypes.GameObjectPrototype;
 import Prototypes.Prototype;
 
 public class BaseType {
     public ArrayList<Component> components;
 
+    @SuppressWarnings("unchecked")
     public BaseType(Prototype prototype) {
         this.components = (ArrayList<Component>) prototype.components.clone();
     }

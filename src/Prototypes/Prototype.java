@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import Components.Component;
-import Components.TextureComponent;
-import Shared.XMLPrototype;
 import Shared.Start;
 import Types.BaseType;
 
@@ -28,7 +26,7 @@ public class Prototype {
         }
         return result;
     }
-
+    @SuppressWarnings({"unchecked"})
     public final void overideComponents(NodeList overrideComponents) {
         for (int i = 0; i < overrideComponents.getLength(); i++) {
             Element component = (Element) overrideComponents.item(i);
@@ -86,7 +84,7 @@ public class Prototype {
         this.components = new ArrayList<Component>();
         loadComponents(components);
     }
-
+    @SuppressWarnings({"unchecked"})
     public Prototype(String id, NodeList components, String parent) {
         this.id = id;
         this.parent = Start.mainRunner.mainSystem.prototypeManager.searchPrototypeById(parent, id);
@@ -114,14 +112,14 @@ public class Prototype {
         }
         return true;
     }
-
+    @SuppressWarnings({"unchecked"})
     public final void tryAddComponent(Component component) {
         if (hasComponent((Class<Component>) component.getClass()) || hasParents(component)) {
             return;
         }
         components.add(component);
     }
-
+    @SuppressWarnings({"unchecked"})
     public static final Class<Prototype> getPrototypeClass(String name) {
         try {
             return (Class<Prototype>) Class.forName(name);
@@ -138,7 +136,7 @@ public class Prototype {
         return null;
     }
 
-    public static void loadPrototype(XMLPrototype object) {
+    /*public static void loadPrototype(XMLPrototype object) {
         try {
             Prototype prototype = getPrototypeClass(object.type).getConstructor().newInstance(object.id,
                     object.components,
@@ -149,6 +147,6 @@ public class Prototype {
             return;
         }
 
-    }
+    }*/
 
 }

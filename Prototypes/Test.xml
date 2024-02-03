@@ -1,7 +1,0 @@
-<Prototypes.GameObjectPrototype id="Test">
-    <Components.VectorComponent>
-        <x>0</x>
-        <y>0</y>
-    </Components.VectorComponent>
-    <Components.TextureComponent></Components.TextureComponent>
-</Prototypes.GameObjectPrototype>

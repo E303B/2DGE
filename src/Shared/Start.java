@@ -5,7 +5,7 @@ import java.io.IOException;
 import Systems.MainSystem;
 
 public class Start implements Runnable {
-    public static final boolean logOnStart = true;
+    public static final boolean logOnStart = false;
 
     public Window mainWindow;
     public static final String logs = "log.txt", title = "2DGE";
@@ -30,6 +30,7 @@ public class Start implements Runnable {
         mainWindow.repaint();
     }
 
+    @SuppressWarnings("unused")
     @Override
     public void run() {
         try {

@@ -2,7 +2,6 @@ package Prototypes;
 
 import Components.TextureComponent;
 import Components.VectorComponent;
-import Types.BaseType;
 import Types.GameObject;
 import org.w3c.dom.NodeList;
 

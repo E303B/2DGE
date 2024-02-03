@@ -13,34 +13,35 @@ public class MainSystem {
     public ArrayList<BaseSystem> systems;
 
     public MainSystem() {
-        prototypeManager = new PrototypeManager("./Prototypes");
+        prototypeManager = new PrototypeManager("./Resources/Prototypes");
         loadAllSystems();
     }
 
     public MainSystem(boolean autoload) {
         if (Start.logOnStart)
             Start.mainRunner.mainLogger.log("Init main system");
-        prototypeManager = new PrototypeManager("./Prototypes");
+        prototypeManager = new PrototypeManager("./Resources/Prototypes");
         if (autoload) {
             autoloadSystems();
         } else
-        loadAllSystems();
+            loadAllSystems();
         if (Start.logOnStart)
             Start.mainRunner.mainLogger.log("Main system initialized");
     }
-    
-    private void autoloadSystems(){
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    private void autoloadSystems() {
         systems = new ArrayList<BaseSystem>();
-        for(Class system:BaseSystem.class.getClasses()){
+        for (Class system : BaseSystem.class.getClasses()) {
             try {
-                systems.add((BaseSystem)system.getDeclaredConstructor().newInstance());
+                systems.add((BaseSystem) system.getDeclaredConstructor().newInstance());
             } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
                     | InvocationTargetException | NoSuchMethodException | SecurityException e) {
                 e.printStackTrace();
             }
         }
     }
-    
+
     private void loadAllSystems() {
         systems = new ArrayList<BaseSystem>();
         systems.add(new GameObjectSystem());
@@ -57,6 +58,7 @@ public class MainSystem {
         return null;
     }
 
+    @SuppressWarnings({ "rawtypes" })
     public BaseSystem getSystem(Class sys) {
         for (BaseSystem system : systems) {
             if (system.getClass() == sys) {

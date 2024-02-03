@@ -51,9 +51,6 @@ public class Window extends JFrame {
             Start.mainRunner.mainLogger.log("Finished window initialization");
     }
 
-    private void drawAll() {
-    }
-
     @Override
     public void paint(Graphics g) {
         ((Graphics2D) g).drawImage(renderBuf, null, 0, 0);
