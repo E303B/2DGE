@@ -8,7 +8,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-
 //Add here all functions which is used in different classes
 public abstract class Tools {
     public static final ArrayList<File> filterByFileExtension(File[] files, String extension) {
@@ -27,6 +26,7 @@ public abstract class Tools {
             return null;
         return directory.listFiles();
     }
+
     public static final ArrayList<String> splitBy(String s, String chars) {
         ArrayList<String> result = new ArrayList<String>();
         String temp = "";
@@ -42,6 +42,7 @@ public abstract class Tools {
             result.add(temp);
         return result;
     }
+
     public static final String readFile(File file) throws IOException {
         return new String(Files.readAllBytes(file.toPath()));
     }
@@ -75,6 +76,42 @@ public abstract class Tools {
     public static final boolean isFloat(String s) {
         try {
             Float.parseFloat(s);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    public static final boolean isDouble(String s) {
+        try {
+            Double.parseDouble(s);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    public static final boolean isShort(String s) {
+        try {
+            Short.parseShort(s);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    public static final boolean isLong(String s) {
+        try {
+            Long.parseLong(s);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    public static final boolean isByte(String s) {
+        try {
+            Byte.parseByte(s);
             return true;
         } catch (NumberFormatException e) {
             return false;

@@ -22,14 +22,27 @@ public abstract class BaseFunction {
                 pointer++;
             } else if (!temp.startsWith("\"") && !temp.startsWith("'") && temp.trim() != temp) {
                 temp = temp.trim();
-                if (Tools.isInteger(temp)) {
+
+                if (Tools.isShort(temp)) {
+                    result.add(Short.parseShort(temp));
+                    temp = "";
+                } else if (Tools.isInteger(temp)) {
                     result.add(Integer.parseInt(temp));
                     temp = "";
                 } else if (Tools.isFloat(temp)) {
                     result.add(Float.parseFloat(temp));
                     temp = "";
+                } else if (Tools.isLong(temp)) {
+                    result.add(Long.parseLong(temp));
+                    temp = "";
+                } else if (Tools.isDouble(temp)) {
+                    result.add(Double.parseDouble(temp));
+                    temp = "";
                 } else if (runner.hasVar(temp)) {
                     result.add(runner.getVar(temp));
+                    temp = "";
+                } else if (Tools.isByte(temp)) {
+                    result.add(Byte.parseByte(temp));
                     temp = "";
                 } else if (Tools.isBool(temp)) {
                     result.add(Boolean.parseBoolean(temp));
@@ -44,12 +57,20 @@ public abstract class BaseFunction {
                 result.add(temp.substring(1, temp.length() - 1));
             else if (!temp.startsWith("\"") && !temp.startsWith("'")) {
                 temp = temp.trim();
-                if (Tools.isInteger(temp))
+                if (Tools.isShort(temp))
+                    result.add(Short.parseShort(temp));
+                else if (Tools.isInteger(temp))
                     result.add(Integer.parseInt(temp));
                 else if (Tools.isFloat(temp))
                     result.add(Float.parseFloat(temp));
+                else if (Tools.isLong(temp))
+                    result.add(Long.parseLong(temp));
+                else if (Tools.isDouble(temp))
+                    result.add(Double.parseDouble(temp));
                 else if (runner.hasVar(temp))
                     result.add(runner.getVar(temp));
+                else if (Tools.isByte(temp))
+                    result.add(Byte.parseByte(temp));
                 else if (Tools.isBool(temp))
                     result.add(Boolean.parseBoolean(temp));
 
