@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 import Components.Component;
 import Shared.Start;
-import Types.BaseType;
+import Types.BaseInstance;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -16,7 +16,7 @@ public class Prototype {
     public ArrayList<Component> components;
     public String id;
     public Prototype parent;
-    public Class<BaseType> assignedType;
+    public Class<BaseInstance> assignedType;
 
     protected HashMap<String, Object> getAttributesForNode(Element node) {
         HashMap<String, Object> result = new HashMap<String, Object>();
