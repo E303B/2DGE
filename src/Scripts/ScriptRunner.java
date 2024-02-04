@@ -36,12 +36,14 @@ public final class ScriptRunner {
     public ScriptRunner(String srcCode, Object params) {
         initPackages();
         line = 0;
-        lines = Tools.splitBy(srcCode, "\n;");
+        lines = Tools.splitBy(srcCode, "\n");
         variables = new ArrayList<Variable>();
         while (line < lines.size()) {
             for (BasePackage basePackage : defaultPackages) {
-                if (basePackage.tryRun(lines.get(line), params, this))
+                if (lines.get(line).trim().startsWith(basePackage.name)) {
+                    basePackage.tryRun(lines.get(line).trim().substring(basePackage.name.length()+1), params, this);
                     break;
+                }
             }
             line++;
         }
