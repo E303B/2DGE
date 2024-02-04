@@ -6,11 +6,6 @@ import Scripts.ScriptRunner;
 import Shared.Tools;
 
 public abstract class BaseFunction {
-    public String name;
-
-    public BaseFunction() {
-        this.name = this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".") + 1);
-    }
 
     public static Object[] parseAttributes(String s, ScriptRunner runner) {
         ArrayList<Object> result = new ArrayList<Object>();
@@ -33,13 +28,31 @@ public abstract class BaseFunction {
                 } else if (Tools.isFloat(temp)) {
                     result.add(Float.parseFloat(temp));
                     temp = "";
-                } else if (Tools.isBool(temp)) {
-                    result.add(Boolean.parseBoolean(temp));
-                    temp = "";
                 } else if (runner.hasVar(temp)) {
                     result.add(runner.getVar(temp));
                     temp = "";
+                } else if (Tools.isBool(temp)) {
+                    result.add(Boolean.parseBoolean(temp));
+                    temp = "";
                 }
+            }
+        }
+        if (!temp.isEmpty()) {
+            if (temp.startsWith("\"") && temp.length() >= 3 && temp.endsWith("\""))
+                result.add(temp.substring(1, temp.length() - 1));
+            else if (temp.startsWith("'") && temp.length() >= 3 && temp.endsWith("'"))
+                result.add(temp.substring(1, temp.length() - 1));
+            else if (!temp.startsWith("\"") && !temp.startsWith("'")) {
+                temp = temp.trim();
+                if (Tools.isInteger(temp))
+                    result.add(Integer.parseInt(temp));
+                else if (Tools.isFloat(temp))
+                    result.add(Float.parseFloat(temp));
+                else if (runner.hasVar(temp))
+                    result.add(runner.getVar(temp));
+                else if (Tools.isBool(temp))
+                    result.add(Boolean.parseBoolean(temp));
+
             }
         }
         return result.toArray();

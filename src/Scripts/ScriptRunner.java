@@ -3,26 +3,32 @@ package Scripts;
 import java.util.ArrayList;
 
 import Scripts.Packages.BasePackage;
-import Scripts.Packages.Console;
 import Shared.Tools;
 
 public final class ScriptRunner {
     private ArrayList<BasePackage> defaultPackages;
     public int line;
     public ArrayList<String> lines;
-    public ArrayList<Variable> variables;
+    public ArrayList<Var> variables;
 
     public boolean hasVar(String name) {
-        for (Variable variable : variables) {
-            if (variable.name == name)
+        for (Var variable : variables) {
+            if (variable.name.equals(name))
                 return true;
         }
         return false;
     }
 
+    public void setVar(String name, Object value){
+        for (Var variable : variables) {
+            if (variable.name.equals(name))
+                variable.trySetData(value);
+        }
+    }
+
     public Object getVar(String name) {
-        for (Variable variable : variables) {
-            if (variable.name == name)
+        for (Var variable : variables) {
+            if (variable.name.equals(name))
                 return variable.getData();
         }
         return null;
@@ -30,18 +36,20 @@ public final class ScriptRunner {
 
     private void initPackages() {
         defaultPackages = new ArrayList<BasePackage>();
-        defaultPackages.add(new Console());
+        defaultPackages.add(new Scripts.Packages.Console());
+        defaultPackages.add(new Scripts.Packages.Variable());
     }
 
     public ScriptRunner(String srcCode, Object params) {
         initPackages();
         line = 0;
         lines = Tools.splitBy(srcCode, "\n");
-        variables = new ArrayList<Variable>();
+        variables = new ArrayList<Var>();
         while (line < lines.size()) {
             for (BasePackage basePackage : defaultPackages) {
-                if (lines.get(line).trim().startsWith(basePackage.name)) {
-                    basePackage.tryRun(lines.get(line).trim().substring(basePackage.name.length()+1), params, this);
+                if(lines.get(line).trim().startsWith("//"))continue;
+                if (lines.get(line).trim().startsWith(basePackage.getClass().getSimpleName())) {
+                    basePackage.tryRun(lines.get(line).trim().substring(basePackage.getClass().getSimpleName().length() + 1), params, this);
                     break;
                 }
             }
