@@ -38,6 +38,7 @@ public final class Start implements Runnable {
         mainWindow.repaint();
     }
 
+    @SuppressWarnings("unused")
     @Override
     public void run() {
         // File related global object

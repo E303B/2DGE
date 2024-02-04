@@ -1,4 +1,3 @@
-Variable.New.Typed "test" "String"
-Variable.Set "test" "Hello world!"
+Variable.New.Typed "test" "Bool"
 Variable.Set "test" 0
 Console.Log test

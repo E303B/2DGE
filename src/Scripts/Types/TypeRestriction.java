@@ -2,7 +2,7 @@ package Scripts.Types;
 
 public abstract class TypeRestriction {
     @SuppressWarnings("rawtypes")
-    static Class[] types = { Any.class, String.class };
+    final static Class[] types = { Any.class, String.class, Bool.class, Float.class, Integer.class, Number.class };
     @SuppressWarnings("rawtypes")
     protected static Class[] available={};
 
@@ -16,7 +16,7 @@ public abstract class TypeRestriction {
     }
 
     @SuppressWarnings("rawtypes")
-    public boolean isAvailable(Object value) {
+    public final boolean isAvailable(Object value) {
         if(available.length<1)return true;
         for (Class c : available) {
             if (c.isInstance(value))

@@ -67,7 +67,7 @@ public abstract class Tools {
         try {
             Boolean.parseBoolean(s);
             return true;
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             return false;
         }
     }
