@@ -82,13 +82,13 @@ public final class Start implements Runnable {
                 tps = limitTPS + 1;
             }
             previous = System.currentTimeMillis();
-            if (limitTPS != 0 && tps >= limitTPS) {
+            //if (limitTPS != 0 && tps >= limitTPS) {
                 try {
                     Thread.sleep(1000 / limitTPS);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            }
+            //}
             tick();
         }
     }

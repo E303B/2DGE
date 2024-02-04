@@ -16,7 +16,7 @@ public class BaseInstance {
 
     public Component getComponent(String name) {
         for (Component i : components) {
-            if (i.getClass().getSimpleName().equals(name)) {
+            if (i.getClass().getName().equals(name)) {
                 return i;
             }
         }

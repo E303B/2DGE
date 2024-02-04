@@ -1,25 +1,23 @@
 package Scripts.Types;
 
-import java.util.ArrayList;
-
 public abstract class TypeRestriction {
-    private static ArrayList<TypeRestriction> types=new ArrayList<TypeRestriction>();
     @SuppressWarnings("rawtypes")
-    protected ArrayList<Class> available;
+    static Class[] types = { Any.class, String.class };
     @SuppressWarnings("rawtypes")
-    public TypeRestriction() {
-        available = new ArrayList<Class>();
-    }
+    protected static Class[] available={};
 
-    public static TypeRestriction getType(String name){
-        for(TypeRestriction t:types){
-            if(t.getClass().getSimpleName().equals(name))return t;
+    @SuppressWarnings("rawtypes")
+    public static final Class getType(java.lang.String name) {
+        for (Class t : types) {
+            if (t.getSimpleName().toString().equals(name)){
+                return t;}
         }
         return null;
     }
 
     @SuppressWarnings("rawtypes")
-    public final boolean isAvailable(Object value) {
+    public boolean isAvailable(Object value) {
+        if(available.length<1)return true;
         for (Class c : available) {
             if (c.isInstance(value))
                 return true;

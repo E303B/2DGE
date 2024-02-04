@@ -1,3 +1,4 @@
-Variable.New.Constant "test"
+Variable.New.Typed "test" "String"
 Variable.Set "test" "Hello world!"
+Variable.Set "test" 0
 Console.Log test
