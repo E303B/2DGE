@@ -99,7 +99,7 @@ public abstract class Tools {
     }
 
     public static final boolean isBool(String s) {
-        return s == "true" || s == "false";
+        return s.toLowerCase().equals("true")||s.toLowerCase().equals("false");
     }
 
     public static final boolean isFloat(String s) {
