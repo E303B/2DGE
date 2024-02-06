@@ -56,7 +56,7 @@ public final class Start implements Runnable {
 
         // Loadings main config
         logOnStart = (boolean) config.getValue("logOnStart", true);
-        limitTPS = (int) config.getValue("limitTPS", 1);
+        limitTPS = Integer.parseInt(config.getValue("limitTPS", 1).toString());
         texturesPath = (String) config.getValue("texturesPath", "");
 
         if (logOnStart)
@@ -83,13 +83,13 @@ public final class Start implements Runnable {
                 tps = limitTPS + 1;
             }
             previous = System.currentTimeMillis();
-            //if (limitTPS != 0 && tps >= limitTPS) {
-                try {
-                    Thread.sleep(1000 / limitTPS);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            //}
+            // if (limitTPS != 0 && tps >= limitTPS) {
+            try {
+                Thread.sleep(1000 / limitTPS);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            // }
             tick();
         }
     }

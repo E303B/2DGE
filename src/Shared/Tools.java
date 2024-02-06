@@ -7,9 +7,43 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 //Add here all functions which is used in different classes
 public abstract class Tools {
+    public static final Object parseValue(String value, HashMap<String, Object> variables, boolean ignoreRestrictions) {
+        String temp = value;
+        if (temp.startsWith("\"") && temp.length() >= 3 && temp.endsWith("\""))
+            return temp.substring(1, temp.length() - 1);
+        else if (temp.startsWith("'") && temp.length() >= 3 && temp.endsWith("'"))
+            return temp.substring(1, temp.length() - 1);
+        else if (!temp.startsWith("\"") && !temp.startsWith("'") && (ignoreRestrictions || temp.trim() != temp)) {
+            temp = temp.trim();
+
+            if (isShort(temp))
+                return Short.parseShort(temp);
+            else if (isInteger(temp))
+                return Integer.parseInt(temp);
+            else if (isFloat(temp))
+                return Float.parseFloat(temp);
+            else if (isLong(temp))
+                return Long.parseLong(temp);
+            else if (isDouble(temp))
+                return Double.parseDouble(temp);
+            else if (isBool(temp))
+                return Boolean.parseBoolean(temp);
+            else if (variables.containsKey(temp))
+                return variables.get(temp);
+            else if (isByte(temp))
+                return Byte.parseByte(temp);
+        }
+        return null;
+    }
+
+    public final static Object parseValue(String value, HashMap<String, Object> variables) {
+        return parseValue(value, variables, false);
+    }
+
     public static final ArrayList<File> filterByFileExtension(File[] files, String extension) {
         ArrayList<File> result = new ArrayList<File>();
         for (File file : files) {
@@ -65,12 +99,7 @@ public abstract class Tools {
     }
 
     public static final boolean isBool(String s) {
-        try {
-            Boolean.parseBoolean(s);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+        return s == "true" || s == "false";
     }
 
     public static final boolean isFloat(String s) {

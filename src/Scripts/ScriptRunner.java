@@ -1,6 +1,7 @@
 package Scripts;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import Scripts.Packages.BasePackage;
 import Shared.Tools;
@@ -11,6 +12,13 @@ public final class ScriptRunner {
     public ArrayList<String> lines;
     public ArrayList<Var> variables;
 
+    public HashMap<String, Object> convertVariablesToHashMap() {
+        HashMap<String, Object> result = new HashMap<String, Object>();
+        for (Var var : variables)
+            result.put(var.name, var.data);
+        return result;
+    }
+
     public boolean hasVar(String name) {
         for (Var variable : variables) {
             if (variable.name.equals(name))
@@ -19,7 +27,7 @@ public final class ScriptRunner {
         return false;
     }
 
-    public void setVar(String name, Object value){
+    public void setVar(String name, Object value) {
         for (Var variable : variables) {
             if (variable.name.equals(name))
                 variable.trySetData(value);
@@ -47,9 +55,12 @@ public final class ScriptRunner {
         variables = new ArrayList<Var>();
         while (line < lines.size()) {
             for (BasePackage basePackage : defaultPackages) {
-                if(lines.get(line).trim().startsWith("//"))continue;
+                if (lines.get(line).trim().startsWith("//"))
+                    continue;
                 if (lines.get(line).trim().startsWith(basePackage.getClass().getSimpleName())) {
-                    basePackage.tryRun(lines.get(line).trim().substring(basePackage.getClass().getSimpleName().length() + 1), params, this);
+                    basePackage.tryRun(
+                            lines.get(line).trim().substring(basePackage.getClass().getSimpleName().length() + 1),
+                            params, this);
                     break;
                 }
             }
