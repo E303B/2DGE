@@ -56,8 +56,8 @@ public final class ScriptRunner implements Runnable {
 
     }
 
-    @Override
-    public void run() {
+    public void runScript() {
+
         line = 0;
         variables = new ArrayList<Var>();
         while (line < lines.size()) {
@@ -73,5 +73,10 @@ public final class ScriptRunner implements Runnable {
             }
             line++;
         }
+    }
+
+    @Override
+    public void run() {
+        runScript();
     }
 }

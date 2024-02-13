@@ -23,8 +23,12 @@ public final class Script {
     }
 
     public void run(Object params) {
-        new Thread(new ScriptRunner(srcCode, params)).start();
-        ;
+        run(params, true);
+    }
+
+    public void run(Object params, boolean newThread) {
+        if(newThread)new Thread(new ScriptRunner(srcCode, params)).start();
+        else new ScriptRunner(srcCode, params).runScript();;
     }
 
     public void run() {
