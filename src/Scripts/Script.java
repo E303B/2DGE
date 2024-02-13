@@ -23,7 +23,8 @@ public final class Script {
     }
 
     public void run(Object params) {
-        new ScriptRunner(srcCode, params);
+        new Thread(new ScriptRunner(srcCode, params)).start();
+        ;
     }
 
     public void run() {

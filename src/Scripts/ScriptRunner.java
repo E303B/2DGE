@@ -6,11 +6,12 @@ import java.util.HashMap;
 import Scripts.Packages.BasePackage;
 import Shared.Tools;
 
-public final class ScriptRunner {
+public final class ScriptRunner implements Runnable {
     private ArrayList<BasePackage> defaultPackages;
     public int line;
     public ArrayList<String> lines;
     public ArrayList<Var> variables;
+    private Object params;
 
     public HashMap<String, Object> convertVariablesToHashMap() {
         HashMap<String, Object> result = new HashMap<String, Object>();
@@ -50,8 +51,14 @@ public final class ScriptRunner {
 
     public ScriptRunner(String srcCode, Object params) {
         initPackages();
-        line = 0;
         lines = Tools.splitBy(srcCode, "\n");
+        this.params = params;
+
+    }
+
+    @Override
+    public void run() {
+        line = 0;
         variables = new ArrayList<Var>();
         while (line < lines.size()) {
             for (BasePackage basePackage : defaultPackages) {
