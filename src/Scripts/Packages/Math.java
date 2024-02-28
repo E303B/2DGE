@@ -9,5 +9,7 @@ public class Math extends BasePackage {
         this.childFunctions.add(new Minus());
         this.childFunctions.add(new Multiply());
         this.childFunctions.add(new Divide());
+        this.childFunctions.add(new Power());
+        this.childFunctions.add(new Mod());
     }
 }
