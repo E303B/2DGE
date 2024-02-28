@@ -32,9 +32,9 @@ public abstract class TypeRestriction {
     public final boolean isAvailable(Object value) {
         if (available.length < 1)
             return true;
-        for (Class c : available) {
-            if (c.isInstance(value))
-                return true;
+        for (Class cl : available) {
+            if (cl.getName().equals(value.getClass().getName()))
+            return true;
         }
         return false;
     }

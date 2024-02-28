@@ -47,6 +47,7 @@ public final class ScriptRunner implements Runnable {
         defaultPackages = new ArrayList<BasePackage>();
         defaultPackages.add(new Scripts.Packages.Console());
         defaultPackages.add(new Scripts.Packages.Variable());
+        defaultPackages.add(new Scripts.Packages.Math());
     }
 
     public ScriptRunner(String srcCode, Object params) {

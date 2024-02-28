@@ -11,7 +11,7 @@ public class Any extends BaseFunction {
     public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);
         if (params.length > 1) {
-            runner.variables.add(new Var(params[0].toString(), Any.class, false, params[1]));
+            runner.variables.add(new Var(params[0].toString(), Scripts.Types.Any.class, false, params[1]));
         } else if (params.length == 1)
             runner.variables.add(new Var(params[0].toString(), null, false));
         else

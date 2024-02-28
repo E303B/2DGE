@@ -11,6 +11,6 @@ public class Log extends BaseFunction {
         if (params.length > 0)
             Start.mainRunner.mainLogger.log(params[0].toString());
         else
-            Start.mainRunner.mainLogger.error("Console.log should be used with one argument, but zero given");
+            Start.mainRunner.mainLogger.error("Console.Log should be used with one argument, but zero given");
     }
 }
