@@ -1,3 +1,8 @@
-Variable.New.Typed "test" "Float" 10.0
-Math.Func.Round "test"
-Console.Log test
+Variable.New.Typed "count" "Short" 0
+Variable.New.Typed "condition" "Boolean" false
+Math.Plus "count" count 1
+Bool.Lesser "condition" count 10
+Console.Log count
+If condition 8
+Move.To 2
+Console.log "End"

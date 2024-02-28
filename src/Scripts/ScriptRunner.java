@@ -3,11 +3,13 @@ package Scripts;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import Scripts.Functions.BaseFunction;
 import Scripts.Packages.BasePackage;
 import Shared.Tools;
 
 public final class ScriptRunner implements Runnable {
     private ArrayList<BasePackage> defaultPackages;
+    private ArrayList<BaseFunction> defaultFunctions;
     public int line;
     public ArrayList<String> lines;
     public ArrayList<Var> variables;
@@ -45,9 +47,14 @@ public final class ScriptRunner implements Runnable {
 
     private void initPackages() {
         defaultPackages = new ArrayList<BasePackage>();
+        defaultFunctions = new ArrayList<BaseFunction>();
         defaultPackages.add(new Scripts.Packages.Console());
         defaultPackages.add(new Scripts.Packages.Variable());
         defaultPackages.add(new Scripts.Packages.Math());
+        defaultPackages.add(new Scripts.Packages.Move());
+        defaultPackages.add(new Scripts.Packages.Bool());
+
+        defaultFunctions.add(new Scripts.Functions.If());
     }
 
     public ScriptRunner(String srcCode, Object params) {
@@ -62,6 +69,16 @@ public final class ScriptRunner implements Runnable {
         line = 0;
         variables = new ArrayList<Var>();
         while (line < lines.size()) {
+            for(BaseFunction baseFunction: defaultFunctions){
+                if (lines.get(line).trim().startsWith("//"))
+                    continue;
+                if (lines.get(line).trim().startsWith(baseFunction.getClass().getSimpleName())) {
+                    baseFunction.run(
+                            lines.get(line).trim().substring(baseFunction.getClass().getSimpleName().length() + 1),
+                            params, this);
+                    break;
+                }
+            }
             for (BasePackage basePackage : defaultPackages) {
                 if (lines.get(line).trim().startsWith("//"))
                     continue;

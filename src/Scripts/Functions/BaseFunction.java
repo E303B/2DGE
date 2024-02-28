@@ -15,9 +15,9 @@ public abstract class BaseFunction {
             Object parsed = Tools.parseValue(temp, runner.convertVariablesToHashMap());
             if (parsed != null) {
                 result.add(parsed);
-                temp = "";
-                if (parsed.toString() == parsed)
+                if (temp.startsWith("\"") || temp.startsWith("'"))
                     pointer++;
+                temp = "";
             }
         }
         if (!temp.isEmpty()) {

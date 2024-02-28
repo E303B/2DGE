@@ -5,7 +5,7 @@ public abstract class TypeRestriction {
     final static Class[] types = {
             Any.class,
             String.class,
-            Bool.class,
+            Boolean.class,
             Float.class,
             Integer.class,
             Number.class,
