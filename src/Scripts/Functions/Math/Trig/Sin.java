@@ -2,7 +2,6 @@ package Scripts.Functions.Math.Trig;
 
 import Scripts.ScriptRunner;
 import Scripts.Functions.BaseFunction;
-import Shared.Start;
 
 public class Sin extends BaseFunction {
     private Object trySin(Object a) {
@@ -13,17 +12,9 @@ public class Sin extends BaseFunction {
     public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);
         if (params.length > 1) {
-            Object i = trySin(params[1]);
-            if (i == null)
-                Start.mainRunner.mainLogger.error("Math.Trig.Sin get invalid argument type");
-            else
-                runner.setVar(params[0].toString(), i);
+            runner.setVar(params[0].toString(), trySin(params[1]));
         } else if (params.length > 0) {
-            Object i = trySin(runner.getVar(params[0].toString()));
-            if (i == null)
-                Start.mainRunner.mainLogger.error("Math.Trig.Sin get invalid argument type");
-            else
-                runner.setVar(params[0].toString(), i);
+            runner.setVar(params[0].toString(), trySin(runner.getVar(params[0].toString())));
         }
     }
 
