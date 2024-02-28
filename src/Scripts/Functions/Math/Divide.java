@@ -7,7 +7,7 @@ import Shared.Tools;
 
 public class Divide extends BaseFunction {
 
-    public Object tryAdd(Object a, Object b) {
+    public Object tryDivide(Object a, Object b) {
         String astr = a.toString();
         String bstr = b.toString();
         if (Tools.isLong(astr) && Tools.isLong(bstr)) {
@@ -32,13 +32,13 @@ public class Divide extends BaseFunction {
     public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);
         if (params.length > 2) {
-            Object i = tryAdd(params[1], params[2]);
+            Object i = tryDivide(params[1], params[2]);
             if (i == null)
                 Start.mainRunner.mainLogger.error("Math.Divide get invalid argument type");
             else
                 runner.setVar(params[0].toString(), i);
         } else if (params.length == 2) {
-            Object i = tryAdd(params[0], params[1]);
+            Object i = tryDivide(params[0], params[1]);
             if (i == null)
                 Start.mainRunner.mainLogger.error("Math.Divide get invalid argument type");
             else

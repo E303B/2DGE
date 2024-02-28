@@ -11,5 +11,6 @@ public class Math extends BasePackage {
         this.childFunctions.add(new Divide());
         this.childFunctions.add(new Power());
         this.childFunctions.add(new Mod());
+        this.childPackages.add(new Func());
     }
 }

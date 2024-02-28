@@ -7,7 +7,7 @@ import Shared.Tools;
 
 public class Minus extends BaseFunction {
 
-    public Object tryAdd(Object a, Object b) {
+    public Object trySubstract(Object a, Object b) {
         String astr = a.toString();
         String bstr = b.toString();
         if (Tools.isLong(astr) && Tools.isLong(bstr)) {
@@ -32,13 +32,13 @@ public class Minus extends BaseFunction {
     public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);
         if (params.length > 2) {
-            Object i = tryAdd(params[1], params[2]);
+            Object i = trySubstract(params[1], params[2]);
             if (i == null)
                 Start.mainRunner.mainLogger.error("Math.Minus get invalid argument type");
             else
                 runner.setVar(params[0].toString(), i);
         } else if (params.length == 2) {
-            Object i = tryAdd(params[0], params[1]);
+            Object i = trySubstract(params[0], params[1]);
             if (i == null)
                 Start.mainRunner.mainLogger.error("Math.Minus get invalid argument type");
             else
