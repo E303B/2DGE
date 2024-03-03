@@ -19,7 +19,6 @@ public abstract class Tools {
             return temp.substring(1, temp.length() - 1);
         else if (!temp.startsWith("\"") && !temp.startsWith("'") && (ignoreRestrictions || temp.trim() != temp)) {
             temp = temp.trim();
-
             if (isShort(temp))
                 return Short.parseShort(temp);
             else if (isInteger(temp))

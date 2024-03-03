@@ -1,6 +1,7 @@
-package Scripts.Packages;
+package Scripts.Packages.Variable;
 
-import Scripts.Functions.VariableFunctions.Set;
+import Scripts.Functions.VariableFunctions.*;
+import Scripts.Packages.BasePackage;
 
 public class Variable extends BasePackage {
     public Variable(){

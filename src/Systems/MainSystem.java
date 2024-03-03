@@ -89,7 +89,7 @@ public class MainSystem {
             try {
                 system.run();
             } catch (Exception e) {
-                Start.mainRunner.mainLogger.error("Catch "+e.getClass().getName()+" while loading "+system.getClass().getName()+". Stacktrace: "+e.getMessage());
+                Start.mainRunner.mainLogger.error("Catch "+e.getClass().getName()+" while loading "+system.getClass().getName()+". Stacktrace: "+e.getLocalizedMessage());
             }
         }
     }

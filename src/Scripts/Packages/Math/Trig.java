@@ -1,6 +1,7 @@
-package Scripts.Packages;
+package Scripts.Packages.Math;
 
 import Scripts.Functions.Math.Trig.*;
+import Scripts.Packages.BasePackage;
 
 public class Trig extends BasePackage {
     public Trig() {

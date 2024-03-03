@@ -1,8 +1,19 @@
-Variable.New.Typed "count" "Short" 0
-Variable.New.Typed "condition" "Boolean" false
-Math.Plus "count" count 1
-Bool.Lesser "condition" count 10
-Console.Log count
-If condition 8
-Move.To 2
-Console.log "End"
+Class.New "Person"
+Class.Attribute.Typed "Person" "name" "String"
+Class.Attribute.Typed "Person" "age" "Short" 0
+
+Variable.New.Typed "person1" "Person"
+Object.New "Person" "person1"
+Object.Set person1 "name" "Max"
+Object.Set person1 "age" 14
+Variable.New.Typed "person2" "Person"
+Object.New "Person" "person2"
+Object.Set person2 "name" "Alex"
+Object.Set person2 "age" 35
+Object.Attribute.Typed person2 "workAt" "String" "Microsoft"
+
+Variable.New.Any "temp"
+Object.Get person1 "name" "temp"
+Console.Log temp
+Object.Get person1 "age" "temp"
+Console.Log temp

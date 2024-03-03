@@ -1,6 +1,7 @@
-package Scripts.Packages;
+package Scripts.Packages.Math;
 
 import Scripts.Functions.Math.Func.*;
+import Scripts.Packages.BasePackage;
 
 public class Func extends BasePackage {
     public Func(){

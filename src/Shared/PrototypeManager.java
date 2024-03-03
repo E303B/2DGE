@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.w3c.dom.NodeList;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 
 import Prototypes.*;
 
@@ -33,8 +32,7 @@ public class PrototypeManager {
                         .getConstructor(String.class, NodeList.class).newInstance(prototype.id,
                                 prototype.components);
             prototypes.add(newPrototype);
-        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
-                | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+        } catch (Exception e) {
             if (Start.logOnStart)
                 Start.mainRunner.mainLogger
                         .error("Catch " + e.getClass().getName() + " while loading prototype " + prototype.id);
