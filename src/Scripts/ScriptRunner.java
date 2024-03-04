@@ -64,6 +64,18 @@ public final class ScriptRunner implements Runnable {
             parent.setVar(name, value);
     }
 
+    public void deleteVar(String name) {
+        if (parent == null) {
+            for (Var var : variables) {
+                if(var.name.equals(name)){
+                    variables.remove(var);
+                    return;
+                }
+            }
+        }
+        else parent.deleteVar(name);
+    }
+
     public java.lang.Object getVar(java.lang.String name) {
         if (parent == null) {
             for (Var variable : variables) {

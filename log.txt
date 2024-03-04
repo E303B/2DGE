@@ -20,3 +20,12 @@
 [ERROR] 2024-03-04T08:17:46.075093200: Math.Plus should be used with at least 2 argument, but 0 given
 [LOG] 2024-03-04T08:17:46.076094200: 0
 [LOG] 2024-03-04T08:18:02.103154200: 1
+[ERROR] 2024-03-04T08:30:45.106374100: Object.Length takes 2 argument, but 0 given
+[ERROR] 2024-03-04T08:30:45.108375600: Object.Attribute.Any takes at least 2 argument, but 1 given
+[ERROR] 2024-03-04T08:30:45.109375600: Variable.Del takes one argument, but zero given
+[ERROR] 2024-03-04T08:30:54.017138400: Object.Length takes 2 argument, but 1 given
+[ERROR] 2024-03-04T08:30:54.019138300: Object.Attribute.Any takes at least 2 argument, but 1 given
+[ERROR] 2024-03-04T08:30:54.020140: Variable.Del takes one argument, but zero given
+[LOG] 2024-03-04T08:31:40.171135200: Hello world!
+[LOG] 2024-03-04T08:31:53.392175300: 1
+[LOG] 2024-03-04T08:32:08.316101400: 2

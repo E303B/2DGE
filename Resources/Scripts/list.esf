@@ -1,0 +1,20 @@
+Class.New "List"
+Variable.New.Any "Push"
+Func.New "Push" 13
+Variable.New.Typed "list" "List"
+Variable.New.Any "temp"
+Variable.New.Typed "index" "Integer"
+Param "list" 0
+Param "temp" 1
+Object.Length list "index"
+Object.Attribute.Any list index temp
+Variable.Del list
+Variable.Del temp
+Variable.Del index
+Variable.New.Any "test"
+Object.New "List" "test"
+Func.Call Push test "Hello world!"
+Func.Call Push test "Goodbye world!"
+Variable.New.Any "a"
+Object.Length test "a"
+Console.Log a

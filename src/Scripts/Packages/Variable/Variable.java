@@ -9,5 +9,6 @@ public class Variable extends BasePackage {
         this.childPackages.add(new New());
         this.childFunctions.add(new Set());
         this.childFunctions.add(new Get());
+        this.childFunctions.add(new Del());
     }
 }

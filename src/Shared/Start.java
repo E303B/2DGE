@@ -73,7 +73,7 @@ public final class Start implements Runnable {
         long deltaTime = 0;
         int tps = 0;
         config.logConfigWarnings();
-        scriptManager.runScript("helloworld.esf");
+        scriptManager.runScript("list.esf");
         // Main loop
         while (true) {
             deltaTime = System.currentTimeMillis() - previous;

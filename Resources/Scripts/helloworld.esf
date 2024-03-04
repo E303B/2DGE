@@ -1,10 +1,1 @@
-Variable.New.Any "increament"
-Variable.New.Typed "a" "Number" 0
-Variable.New.Any "temp1" "a"
-Variable.New.Any "temp2" 0
-Func.New "increament" 8
-Param "temp1" 0
-Variable.Get "temp2" temp1
-Math.Plus temp1 temp2 1
-Func.Call increament "a"
-Console.Log a
+Console.Log "Hello world!"
