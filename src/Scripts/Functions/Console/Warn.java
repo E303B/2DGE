@@ -9,7 +9,7 @@ public class Warn extends BaseFunction {
      * 0. Value to warn
      */
     @Override
-    public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
+    public void run(String functionParams, Object[] scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);
         if (params.length > 0)
             Start.mainRunner.mainLogger.warning(params[0].toString());

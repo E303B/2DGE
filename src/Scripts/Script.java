@@ -22,11 +22,11 @@ public final class Script {
         name = file.getName();
     }
 
-    public void run(Object params) {
+    public void run(Object[] params) {
         run(params, true);
     }
 
-    public void run(Object params, boolean newThread) {
+    public void run(Object[] params, boolean newThread) {
         if(newThread)new Thread(new ScriptRunner(srcCode, params)).start();
         else new ScriptRunner(srcCode, params).runScript();;
     }

@@ -11,7 +11,7 @@ public class Any extends BaseFunction {
      * *1. Default value
      */
     @Override
-    public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
+    public void run(String functionParams, Object[] scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);
         if (params.length > 1) {
             runner.variables.add(new Var(params[0].toString(), new Scripts.Types.Any(), false, params[1]));

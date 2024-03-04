@@ -34,7 +34,7 @@ public class Power extends BaseFunction {
      * *2. Optimal arg(if it given, returns first arg ^ this var, else returns var name ^ first arg)
      */
     @Override
-    public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
+    public void run(String functionParams, Object[] scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);
         if (params.length > 2) {
             Object i = tryPow(params[1], params[2]);

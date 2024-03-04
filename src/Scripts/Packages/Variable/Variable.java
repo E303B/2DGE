@@ -8,5 +8,6 @@ public class Variable extends BasePackage {
         super();
         this.childPackages.add(new New());
         this.childFunctions.add(new Set());
+        this.childFunctions.add(new Get());
     }
 }

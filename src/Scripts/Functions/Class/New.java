@@ -11,7 +11,7 @@ public class New extends BaseFunction {
      * *1. Class parent
      */
     @Override
-    public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
+    public void run(String functionParams, Object[] scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);
         try {
             if (params.length > 1) {

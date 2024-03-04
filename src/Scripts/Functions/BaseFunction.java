@@ -28,5 +28,5 @@ public abstract class BaseFunction {
         return result.toArray();
     }
 
-    public abstract void run(String functionParams, Object scriptParams, ScriptRunner runner);
+    public abstract void run(String functionParams, Object[] scriptParams, ScriptRunner runner);
 }

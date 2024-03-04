@@ -25,7 +25,7 @@ public class Floor extends BaseFunction {
      * *1. Value to floor(if not given, returns floor of first var)
      */
     @Override
-    public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
+    public void run(String functionParams, Object[] scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);
         if (params.length > 1) {
             Object i = tryFloor(params[1]);

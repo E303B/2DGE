@@ -11,7 +11,7 @@ public class Not extends BaseFunction {
      * 1. Arg
      */
     @Override
-    public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
+    public void run(String functionParams, Object[] scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);
         if (params.length > 1) {
             if(Tools.isBool(params[1].toString()))

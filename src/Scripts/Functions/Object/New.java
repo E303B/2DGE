@@ -12,7 +12,7 @@ public class New extends BaseFunction {
      * 1. Var where value should be stored
      */
     @Override
-    public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
+    public void run(String functionParams, Object[] scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);
         try {
             if (params.length > 1) {

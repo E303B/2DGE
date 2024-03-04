@@ -25,7 +25,7 @@ public class Ceil extends BaseFunction {
      * *1. Value to ceil(if not given, returns ceil of first var)
      */
     @Override
-    public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
+    public void run(String functionParams, Object[] scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);
         if (params.length > 1) {
             Object i = tryCeil(params[1]);

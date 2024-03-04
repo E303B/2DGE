@@ -12,7 +12,7 @@ public class Get extends BaseFunction {
      * 2. Var where value should be stored
      */
     @Override
-    public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
+    public void run(String functionParams, Object[] scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);
         if (params.length > 2) {
             try {

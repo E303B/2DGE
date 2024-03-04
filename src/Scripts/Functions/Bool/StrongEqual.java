@@ -11,7 +11,7 @@ public class StrongEqual extends BaseFunction {
      * 2. Arg 2
      */
     @Override
-    public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
+    public void run(String functionParams, Object[] scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);
         if(params.length>2){
             runner.setVar(params[0].toString(), params[1].equals(params[2]));

@@ -11,7 +11,7 @@ public class If extends BaseFunction {
      * 1. Line to go if condition is false
      */
     @Override
-    public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
+    public void run(String functionParams, Object[] scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);
         if (params.length > 1) {
             if (!(Tools.isBool(params[0].toString()) && Tools.isInteger(params[1].toString()) && Integer.parseInt(params[1].toString()) >= 0)) {

@@ -32,7 +32,9 @@ public final class ScriptRunner implements Runnable {
             Scripts.Types.Object.class,
             Scripts.Types.Class.class
     };;
-    private java.lang.Object params;
+    private java.lang.Object[] params;
+
+    private ScriptRunner parent;
 
     public HashMap<java.lang.String, java.lang.Object> convertVariablesToHashMap() {
         HashMap<java.lang.String, java.lang.Object> result = new HashMap<java.lang.String, java.lang.Object>();
@@ -42,26 +44,35 @@ public final class ScriptRunner implements Runnable {
     }
 
     public boolean hasVar(java.lang.String name) {
-        for (Var variable : variables) {
-            if (variable.name.equals(name))
-                return true;
-        }
-        return false;
+        if (parent == null) {
+            for (Var variable : variables) {
+                if (variable.name.equals(name))
+                    return true;
+            }
+            return false;
+        } else
+            return parent.hasVar(name);
     }
 
     public void setVar(java.lang.String name, java.lang.Object value) {
-        for (Var variable : variables) {
-            if (variable.name.equals(name))
-                variable.trySetData(value);
-        }
+        if (parent == null) {
+            for (Var variable : variables) {
+                if (variable.name.equals(name))
+                    variable.trySetData(value);
+            }
+        } else
+            parent.setVar(name, value);
     }
 
     public java.lang.Object getVar(java.lang.String name) {
-        for (Var variable : variables) {
-            if (variable.name.equals(name))
-                return variable.getData();
-        }
-        return null;
+        if (parent == null) {
+            for (Var variable : variables) {
+                if (variable.name.equals(name))
+                    return variable.getData();
+            }
+            return null;
+        } else
+            return parent.getVar(name);
     }
 
     private void initPackages() {
@@ -74,77 +85,119 @@ public final class ScriptRunner implements Runnable {
         defaultPackages.add(new Scripts.Packages.Bool());
         defaultPackages.add(new Scripts.Packages.Class.Class());
         defaultPackages.add(new Scripts.Packages.Object.Object());
+        defaultPackages.add(new Scripts.Packages.Func());
 
         defaultFunctions.add(new Scripts.Functions.If());
+        defaultFunctions.add(new Scripts.Functions.Param());
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public boolean hasType(java.lang.String name) throws InstantiationException, IllegalAccessException,
             IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-        for (Class type : defaultTypeRestrictions) {
-            if (((TypeRestriction) type.getConstructor().newInstance()).name == name) {
-                return true;
+        if (parent == null) {
+            for (Class type : defaultTypeRestrictions) {
+                if (((TypeRestriction) type.getConstructor().newInstance()).name == name) {
+                    return true;
+                }
             }
-        }
-        for (TypeRestriction type : customTypeRestrictions) {
-            if (type.name == name) {
-                return true;
+            for (TypeRestriction type : customTypeRestrictions) {
+                if (type.name == name) {
+                    return true;
+                }
             }
-        }
+        } else
+            parent.hasType(name);
         return false;
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public TypeRestriction getType(java.lang.String name) throws InstantiationException, IllegalAccessException,
             IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-        for (Class type : defaultTypeRestrictions) {
-            if (((TypeRestriction) type.getConstructor().newInstance()).name.equals(name)) {
-                return (TypeRestriction) type.getConstructor().newInstance();
+        if (parent == null) {
+            for (Class type : defaultTypeRestrictions) {
+                if (((TypeRestriction) type.getConstructor().newInstance()).name.equals(name)) {
+                    return (TypeRestriction) type.getConstructor().newInstance();
+                }
             }
-        }
-        for (TypeRestriction type : customTypeRestrictions) {
-            if (type.name.equals(name)) {
-                return type;
+            for (TypeRestriction type : customTypeRestrictions) {
+                if (type.name.equals(name)) {
+                    return type;
+                }
             }
-        }
+        } else
+            return parent.getType(name);
         return null;
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public Class getTypeClass(java.lang.String name) throws InstantiationException, IllegalAccessException,
             IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-        for (Class type : defaultTypeRestrictions) {
-            if (((TypeRestriction) type.getConstructor().newInstance()).name == name) {
-                return type;
+        if (parent == null) {
+            for (Class type : defaultTypeRestrictions) {
+                if (((TypeRestriction) type.getConstructor().newInstance()).name == name) {
+                    return type;
+                }
             }
-        }
-        for (TypeRestriction type : customTypeRestrictions) {
-            if (type.name == name) {
-                return type.getClass();
+            for (TypeRestriction type : customTypeRestrictions) {
+                if (type.name == name) {
+                    return type.getClass();
+                }
             }
-        }
+        } else
+            return parent.getTypeClass(name);
         return null;
     }
 
     public void newType(TypeRestriction type) throws InstantiationException, IllegalAccessException,
             IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-        if (hasType(type.name))
-            return;
-        this.customTypeRestrictions.add(type);
+        if (parent == null) {
+            if (hasType(type.name))
+                return;
+            this.customTypeRestrictions.add(type);
+        } else
+            parent.newType(type);
     }
 
-    public ScriptRunner(java.lang.String srcCode, java.lang.Object params) {
+    public ScriptRunner(java.lang.String srcCode, java.lang.Object[] params) {
         initPackages();
         customTypeRestrictions = new ArrayList<TypeRestriction>();
         lines = Tools.splitBy(srcCode, "\n");
+        variables = new ArrayList<Var>();
         this.params = params;
+        parent = null;
 
     }
 
-    public void runScript() {
-
-        line = 0;
+    public ScriptRunner(ArrayList<java.lang.String> srcCode, java.lang.Object[] params) {
+        initPackages();
+        customTypeRestrictions = new ArrayList<TypeRestriction>();
+        lines = srcCode;
         variables = new ArrayList<Var>();
+        this.params = params;
+        parent = null;
+
+    }
+
+    public ScriptRunner(java.lang.String srcCode, java.lang.Object[] params, ScriptRunner parent) {
+        initPackages();
+        customTypeRestrictions = parent.customTypeRestrictions;
+        lines = Tools.splitBy(srcCode, "\n");
+        variables = parent.variables;
+        this.params = params;
+        this.parent = parent;
+    }
+
+    public ScriptRunner(ArrayList<java.lang.String> srcCode, java.lang.Object[] params, ScriptRunner parent) {
+        initPackages();
+        customTypeRestrictions = parent.customTypeRestrictions;
+        lines = srcCode;
+        variables = parent.variables;
+        this.params = params;
+        this.parent = parent;
+    }
+
+    public void runScript() {
+        line = 0;
         while (line < lines.size()) {
             for (BaseFunction baseFunction : defaultFunctions) {
                 if (lines.get(line).trim().startsWith("//"))

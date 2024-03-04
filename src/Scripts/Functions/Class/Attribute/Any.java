@@ -12,7 +12,7 @@ public class Any extends BaseFunction {
      * *2. Attribute starting value
      */
     @Override
-    public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
+    public void run(String functionParams, Object[] scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);
         try {
             if (params.length > 2) {

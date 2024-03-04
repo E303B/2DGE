@@ -25,7 +25,7 @@ public class Abs extends BaseFunction {
      * *1. Value to abs(if not given, returns abs of first var)
      */
     @Override
-    public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
+    public void run(String functionParams, Object[] scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);
         if (params.length > 1) {
             Object i = tryAbs(params[1]);

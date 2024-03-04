@@ -11,7 +11,7 @@ public class Length extends BaseFunction {
      * 1. Var name to store result
      */
     @Override
-    public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
+    public void run(String functionParams, Object[] scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);
         if (params.length > 1) {
             runner.setVar(params[1].toString(), ((ScriptObject)params[0]).size());

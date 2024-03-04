@@ -1,19 +1,10 @@
-Class.New "Person"
-Class.Attribute.Typed "Person" "name" "String"
-Class.Attribute.Typed "Person" "age" "Short" 0
-
-Variable.New.Typed "person1" "Person"
-Object.New "Person" "person1"
-Object.Set person1 "name" "Max"
-Object.Set person1 "age" 14
-Variable.New.Typed "person2" "Person"
-Object.New "Person" "person2"
-Object.Set person2 "name" "Alex"
-Object.Set person2 "age" 35
-Object.Attribute.Typed person2 "workAt" "String" "Microsoft"
-
-Variable.New.Any "temp"
-Object.Get person1 "name" "temp"
-Console.Log temp
-Object.Get person1 "age" "temp"
-Console.Log temp
+Variable.New.Any "increament"
+Variable.New.Typed "a" "Number" 0
+Variable.New.Any "temp1" "a"
+Variable.New.Any "temp2" 0
+Func.New "increament" 8
+Param "temp1" 0
+Variable.Get "temp2" temp1
+Math.Plus temp1 temp2 1
+Func.Call increament "a"
+Console.Log a

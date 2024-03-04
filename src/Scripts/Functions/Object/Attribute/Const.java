@@ -12,7 +12,7 @@ public class Const extends BaseFunction {
      * 2. Value
      */
     @Override
-    public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
+    public void run(String functionParams, Object[] scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);
         try {
             if (params.length > 2) {

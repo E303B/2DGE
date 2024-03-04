@@ -12,7 +12,7 @@ public class Atan extends BaseFunction {
      * *1. Value to atan(if not given, returns atan of first var)
      */
     @Override
-    public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
+    public void run(String functionParams, Object[] scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);
         if (params.length > 1) {
             runner.setVar(params[0].toString(), tryAtan(params[1]));

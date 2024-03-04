@@ -14,7 +14,7 @@ public abstract class BasePackage {
         childFunctions = new ArrayList<BaseFunction>();
     }
 
-    public final boolean tryRun(String command, Object scriptsParams, ScriptRunner runner) {
+    public final boolean tryRun(String command, Object[] scriptsParams, ScriptRunner runner) {
         if (childFunctions != null) {
             for (BaseFunction function : childFunctions) {
                 if (command.startsWith(function.getClass().getSimpleName())) {

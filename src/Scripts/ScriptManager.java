@@ -32,7 +32,7 @@ public final class ScriptManager {
                     .log("Finish script manager initialization");
     }
 
-    public boolean runScript(String name, Object params) {
+    public boolean runScript(String name, Object[] params) {
         for (Script script : scripts) {
             if (script.name.equals(name)) {
                 script.run(params);

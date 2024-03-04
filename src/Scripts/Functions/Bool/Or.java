@@ -12,7 +12,7 @@ public class Or extends BaseFunction {
      * 2. Arg 2
      */
     @Override
-    public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
+    public void run(String functionParams, Object[] scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);
         if (params.length > 2) {
             if(Tools.isBool(params[1].toString())&&Tools.isBool(params[2].toString())){

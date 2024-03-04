@@ -27,19 +27,21 @@ public class Plus extends BaseFunction {
         }
         return null;
     }
+
     /*
      * 0. Var name to store result
      * 1. First arg
-     * *2. Optimal arg(if it given, returns first arg + this var, else returns var name + first arg)
+     * *2. Optimal arg(if it given, returns first arg + this var, else returns var
+     * name + first arg)
      */
     @Override
-    public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
+    public void run(String functionParams, Object[] scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);
         if (params.length > 2) {
             Object i = tryAdd(params[1], params[2]);
             if (i == null)
                 Start.mainRunner.mainLogger.error("Math.Plus get invalid argument type");
-            else
+            else 
                 runner.setVar(params[0].toString(), i);
         } else if (params.length == 2) {
             Object i = tryAdd(params[0], params[1]);

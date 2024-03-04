@@ -12,7 +12,7 @@ public class Sin extends BaseFunction {
      * *1. Value to sin(if not given, returns sin of first var)
      */
     @Override
-    public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
+    public void run(String functionParams, Object[] scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);
         if (params.length > 1) {
             runner.setVar(params[0].toString(), trySin(params[1]));
