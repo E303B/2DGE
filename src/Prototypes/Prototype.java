@@ -21,19 +21,22 @@ public class Prototype {
     protected HashMap<String, Object> getAttributesForNode(Element node) {
         HashMap<String, Object> result = new HashMap<String, Object>();
         for (int i = 0; i < node.getChildNodes().getLength(); i++) {
-            Element child = (Element) node.getChildNodes().item(i);
-            result.put(child.getTagName(), child.getChildNodes());
+            if (node.getChildNodes().item(i).getNodeType() == Node.ELEMENT_NODE) {
+                Element child = (Element) node.getChildNodes().item(i);
+                result.put(child.getTagName(), child.getChildNodes());
+            }
         }
         return result;
     }
-    @SuppressWarnings({"unchecked"})
+
+    @SuppressWarnings({ "unchecked" })
     public final void overideComponents(NodeList overrideComponents) {
         for (int i = 0; i < overrideComponents.getLength(); i++) {
             Element component = (Element) overrideComponents.item(i);
             try {
                 if (!hasComponent((Class<Component>) Class.forName(component.getTagName()))) {
 
-                    tryAddComponent((Component) Class.forName(component.getTagName()).getConstructor()
+                    tryAddComponent((Component) Class.forName(component.getTagName()).getConstructor(Node.class)
                             .newInstance(getAttributesForNode(component)));
 
                     continue;
@@ -66,7 +69,7 @@ public class Prototype {
                     String name = ((Element) component).getTagName();
                     try {
                         this.components.add((Component) (Component.getComponentClass(name)
-                                .getConstructor().newInstance()));
+                                .getConstructor(Node.class).newInstance(component)));
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -84,7 +87,8 @@ public class Prototype {
         this.components = new ArrayList<Component>();
         loadComponents(components);
     }
-    @SuppressWarnings({"unchecked"})
+
+    @SuppressWarnings({ "unchecked" })
     public Prototype(String id, NodeList components, String parent) {
         this.id = id;
         this.parent = Start.mainRunner.mainSystem.prototypeManager.searchPrototypeById(parent, id);
@@ -102,24 +106,26 @@ public class Prototype {
     }
 
     protected final boolean hasParents(Component component) {
-        if (component.parents == null) {
+        if (component.getParents() == null) {
             return true;
         }
-        for (Object i : component.parents) {
+        for (Object i : component.getParents()) {
             if (!components.contains(i)) {
                 return false;
             }
         }
         return true;
     }
-    @SuppressWarnings({"unchecked"})
+
+    @SuppressWarnings({ "unchecked" })
     public final void tryAddComponent(Component component) {
         if (hasComponent((Class<Component>) component.getClass()) || hasParents(component)) {
             return;
         }
         components.add(component);
     }
-    @SuppressWarnings({"unchecked"})
+
+    @SuppressWarnings({ "unchecked" })
     public static final Class<Prototype> getPrototypeClass(String name) {
         try {
             return (Class<Prototype>) Class.forName(name);
@@ -130,23 +136,10 @@ public class Prototype {
 
     public final Component getComponent(String name) {
         for (Component component : components) {
-            if (component.getClass().getName() == name)
+            if (component.getClass().getName().equals(name))
                 return component;
         }
         return null;
     }
-
-    /*public static void loadPrototype(XMLPrototype object) {
-        try {
-            Prototype prototype = getPrototypeClass(object.type).getConstructor().newInstance(object.id,
-                    object.components,
-                    Start.mainRunner.mainSystem.prototypeManager.searchPrototypeById(object.parent, object.id));
-        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
-                | NoSuchMethodException | SecurityException e) {
-            e.printStackTrace();
-            return;
-        }
-
-    }*/
 
 }

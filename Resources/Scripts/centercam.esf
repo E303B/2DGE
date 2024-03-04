@@ -1,0 +1,9 @@
+Variable.New.Any "x" 0
+Variable.New.Any "y" 0
+System "GameObjectSystem" "object" "componentCall" 0 "Components.VectorComponent" "GetX" "x"
+System "GameObjectSystem" "object" "componentCall" 0 "Components.VectorComponent" "GetY" "y"
+Console.Log x
+Console.Log y
+System "CameraSystem" "SetCameraX" 500.0
+System "CameraSystem" "GetCameraX" "x"
+Console.Log x

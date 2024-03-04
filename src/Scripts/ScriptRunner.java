@@ -101,6 +101,7 @@ public final class ScriptRunner implements Runnable {
 
         defaultFunctions.add(new Scripts.Functions.If());
         defaultFunctions.add(new Scripts.Functions.Param());
+        defaultFunctions.add(new Scripts.Functions.System());
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })

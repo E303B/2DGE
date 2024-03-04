@@ -33,6 +33,7 @@ public class PrototypeManager {
                                 prototype.components);
             prototypes.add(newPrototype);
         } catch (Exception e) {
+            e.printStackTrace();
             if (Start.logOnStart)
                 Start.mainRunner.mainLogger
                         .error("Catch " + e.getClass().getName() + " while loading prototype " + prototype.id);

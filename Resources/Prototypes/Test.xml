@@ -1,7 +1,10 @@
 <Prototypes.GameObjectPrototype id="Test">
     <Components.VectorComponent>
-        <x>0</x>
-        <y>0</y>
+        <x>15.0</x>
+        <y>15.0</y>
     </Components.VectorComponent>
-    <Components.TextureComponent></Components.TextureComponent>
+    <Components.TextureComponent>
+        <width>100.0</width>
+        <height>100.0</height>
+    </Components.TextureComponent>
 </Prototypes.GameObjectPrototype>

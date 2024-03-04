@@ -2,18 +2,19 @@ package Components;
 
 import org.w3c.dom.Node;
 
-public class VectorComponent extends Component {
-    public float x, y;
+import Scripts.ScriptRunner;
+import Shared.Start;
 
+public class VectorComponent extends Component {
     public VectorComponent(Node attributes) {
         super(attributes);
-        x = (float) trySearchAttribute("x", this.attributes, x);
-        y = (float) trySearchAttribute("y", this.attributes, y);
     }
 
     public VectorComponent() {
         super();
     }
+
+    public float x, y;
 
     @Override
     public void tryOverrideAttribute(String name, Object value) {
@@ -27,5 +28,36 @@ public class VectorComponent extends Component {
             default:
                 break;
         }
+    }
+
+    @Override
+    public void call(Object[] params, ScriptRunner runner) {
+        if (params.length < 2) {
+            Start.mainRunner.mainLogger
+                    .error("Call VectorComponent takes 2 arguments, but " + params.length + " given");
+            return;
+        }
+        switch (params[0].toString()) {
+            case "GetX":
+                runner.setVar(params[1].toString(), x);
+                break;
+            case "GetY":
+                runner.setVar(params[1].toString(), y);
+                break;
+            case "SetX":
+                x = (float) params[1];
+                break;
+            case "SetY":
+                y = (float) params[1];
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void init() {
+        x = Float.parseFloat(getAttribute("x", 10).toString());
+        y = Float.parseFloat(getAttribute("y", 10).toString());
     }
 }

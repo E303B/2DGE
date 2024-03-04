@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import Components.TextureComponent;
 import Components.VectorComponent;
+import Scripts.ScriptRunner;
 
 public class TextureSystem extends BaseSystem {
     static {
@@ -32,6 +33,10 @@ public class TextureSystem extends BaseSystem {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void call(Object[] params, ScriptRunner runner) {
     }
 
 }

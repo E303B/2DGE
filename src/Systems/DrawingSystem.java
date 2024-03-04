@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
+import Scripts.ScriptRunner;
+
 public class DrawingSystem extends BaseSystem {
     static {
         BaseSystem.systems.add(DrawingSystem.class);
@@ -20,6 +22,10 @@ public class DrawingSystem extends BaseSystem {
     public final void renderImage(String path, int x, int y, int width, int height) throws IOException {
         Graphics gr = Start.mainRunner.mainWindow.renderBuf.getGraphics();
         final BufferedImage image = ImageIO.read(new File(path));
-        gr.drawImage(image, x - width / 2, y - height / 2, x + width / 2, y + height / 2, null);
+        gr.drawImage(image, x - width / 2, y - height / 2, width, height, null);
+    }
+
+    @Override
+    public void call(Object[] params, ScriptRunner runner) {
     }
 }

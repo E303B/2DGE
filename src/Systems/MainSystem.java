@@ -1,7 +1,9 @@
 package Systems;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
+import Scripts.ScriptRunner;
 import Shared.PrototypeManager;
 import Shared.Window;
 import Shared.Start;
@@ -13,13 +15,21 @@ public class MainSystem {
     public PrototypeManager prototypeManager;
     public ArrayList<BaseSystem> systems;
 
+    public void call(Object[] params, ScriptRunner runner) {
+        for (BaseSystem system : systems) {
+            if (system.getClass().getSimpleName().equals(params[0].toString())) {
+                system.call(Arrays.copyOfRange(params, 1, params.length), runner);
+            }
+        }
+    }
+
     public MainSystem() {
         prototypeManager = new PrototypeManager((String) Start.mainRunner.config.getValue("prototypesPath"));
         loadAllSystems();
         if (Start.logOnStart)
             Start.mainRunner.mainLogger.log("Main system initialized");
     }
-    
+
     public MainSystem(boolean autoload) {
         if (Start.logOnStart)
             Start.mainRunner.mainLogger.log("Init main system");
@@ -31,11 +41,11 @@ public class MainSystem {
         if (Start.logOnStart)
             Start.mainRunner.mainLogger.log("Main system initialized");
     }
-    
-    //Doesn`t recommend using this one
+
+    // Doesn`t recommend using this one
     @SuppressWarnings({ "unchecked", "rawtypes" })
     private void autoloadSystems() {
-        //TODO: Fix systemloading to auto
+        // TODO: Fix systemloading to auto
         systems = new ArrayList<BaseSystem>();
         for (Class system : BaseSystem.systems) {
             try {
@@ -49,7 +59,7 @@ public class MainSystem {
 
     private void loadAllSystems() {
         systems = new ArrayList<BaseSystem>();
-        //Add here all new systems
+        // Add here all new systems
         systems.add(new DrawingSystem());
         systems.add(new GameObjectSystem());
         systems.add(new TextureSystem());
@@ -81,7 +91,7 @@ public class MainSystem {
         return null;
     }
 
-    //Runs every single system
+    // Runs every single system
     public void run() {
         Window window = Start.mainRunner.mainWindow;
         window.renderBuf = new BufferedImage(window.getWidth(), window.getHeight(), BufferedImage.TYPE_INT_RGB);
@@ -89,7 +99,8 @@ public class MainSystem {
             try {
                 system.run();
             } catch (Exception e) {
-                Start.mainRunner.mainLogger.error("Catch "+e.getClass().getName()+" while loading "+system.getClass().getName()+". Stacktrace: "+e.getLocalizedMessage());
+                Start.mainRunner.mainLogger.error("Catch " + e.getClass().getName() + " while loading "
+                        + system.getClass().getName() + ". Stacktrace: " + e.getLocalizedMessage());
             }
         }
     }
