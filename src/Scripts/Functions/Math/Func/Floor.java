@@ -20,7 +20,10 @@ public class Floor extends BaseFunction {
         }
         return null;
     }
-
+    /*
+     * 0. Var name to store result
+     * *1. Value to floor(if not given, returns floor of first var)
+     */
     @Override
     public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);

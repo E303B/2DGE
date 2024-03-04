@@ -6,7 +6,11 @@ import Scripts.Functions.BaseFunction;
 import Shared.Start;
 
 public class Any extends BaseFunction {
-
+    /*
+     * 0. Class name
+     * 1. Attribute name
+     * *2. Attribute starting value
+     */
     @Override
     public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);
@@ -19,9 +23,11 @@ public class Any extends BaseFunction {
                 Start.mainRunner.mainLogger
                         .error("Object.Attribute.Any takes at least 2 argument, but " + params.length + " given");
         } catch (Exception e) {
-            e.printStackTrace();;
+            e.printStackTrace();
+            ;
             Start.mainRunner.mainLogger
-                    .error("Object.Attribute.Any throw " + e.getClass().getSimpleName() + ": " + e.getLocalizedMessage());
+                    .error("Object.Attribute.Any throw " + e.getClass().getSimpleName() + ": "
+                            + e.getLocalizedMessage());
         }
     }
 

@@ -20,7 +20,10 @@ public class Abs extends BaseFunction {
         }
         return null;
     }
-
+    /*
+     * 0. Var name to store result
+     * *1. Value to abs(if not given, returns abs of first var)
+     */
     @Override
     public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);

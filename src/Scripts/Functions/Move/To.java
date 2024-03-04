@@ -5,7 +5,9 @@ import Scripts.Functions.BaseFunction;
 import Shared.Tools;
 
 public class To extends BaseFunction {
-
+    /*
+     * How much line to go(negative value for backward, positive value for forward)
+     */
     @Override
     public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);

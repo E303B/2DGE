@@ -7,7 +7,10 @@ public class Atan extends BaseFunction {
     private Object tryAtan(Object a) {
         return Math.atan(Double.parseDouble(a.toString()));
     }
-
+    /*
+     * 0. Var name to store result
+     * *1. Value to atan(if not given, returns atan of first var)
+     */
     @Override
     public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);

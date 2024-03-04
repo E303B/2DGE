@@ -5,6 +5,9 @@ import Scripts.Functions.BaseFunction;
 import Shared.Start;
 
 public class Log extends BaseFunction {
+    /*
+     * 0. Value to log
+     */
     @Override
     public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);

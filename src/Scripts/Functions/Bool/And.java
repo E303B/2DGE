@@ -6,7 +6,11 @@ import Shared.Start;
 import Shared.Tools;
 
 public class And extends BaseFunction {
-
+    /*
+     * 0. Var name
+     * 1. Arg 1
+     * 2. Arg 2
+     */
     @Override
     public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);

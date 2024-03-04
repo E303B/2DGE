@@ -6,6 +6,10 @@ import Shared.Tools;
 
 public class If extends BaseFunction {
 
+    /*
+     * 0. Condition
+     * 1. Line to go if condition is false
+     */
     @Override
     public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);

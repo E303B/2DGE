@@ -5,7 +5,9 @@ import Scripts.Functions.BaseFunction;
 import Shared.Tools;
 
 public class By extends BaseFunction {
-
+    /*
+     * 0. Line where to go(starts with 0)
+     */
     @Override
     public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);

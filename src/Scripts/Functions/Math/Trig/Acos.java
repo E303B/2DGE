@@ -7,7 +7,10 @@ public class Acos extends BaseFunction {
     private Object tryAcos(Object a) {
         return Math.acos(Double.parseDouble(a.toString()));
     }
-
+    /*
+     * 0. Var name to store result
+     * *1. Value to acos(if not given, returns acos of first var)
+     */
     @Override
     public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);

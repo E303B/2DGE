@@ -7,7 +7,10 @@ public class Cos extends BaseFunction {
     private Object tryCos(Object a) {
         return Math.cos(Double.parseDouble(a.toString()));
     }
-
+    /*
+     * 0. Var name to store result
+     * *1. Value to cos(if not given, returns cos of first var)
+     */
     @Override
     public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);

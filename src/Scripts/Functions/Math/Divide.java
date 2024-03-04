@@ -27,7 +27,11 @@ public class Divide extends BaseFunction {
         }
         return null;
     }
-
+    /*
+     * 0. Var name to store result
+     * 1. First arg
+     * *2. Optimal arg(if it given, returns first arg / this var, else returns var name / first arg)
+     */
     @Override
     public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);

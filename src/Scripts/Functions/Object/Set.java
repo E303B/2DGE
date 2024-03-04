@@ -6,7 +6,11 @@ import Scripts.Functions.BaseFunction;
 import Shared.Start;
 
 public class Set extends BaseFunction {
-
+    /*
+     * 0. Class name
+     * 1. Attribute name
+     * 2. Value
+     */
     @Override
     public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);

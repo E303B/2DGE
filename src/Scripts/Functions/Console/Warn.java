@@ -5,7 +5,9 @@ import Scripts.Functions.BaseFunction;
 import Shared.Start;
 
 public class Warn extends BaseFunction {
-
+    /*
+     * 0. Value to warn
+     */
     @Override
     public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);

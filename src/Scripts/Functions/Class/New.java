@@ -6,6 +6,10 @@ import Scripts.Types.ScriptClass;
 import Shared.Start;
 
 public class New extends BaseFunction {
+    /*
+     * 0. Class name
+     * *1. Class parent
+     */
     @Override
     public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);

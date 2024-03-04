@@ -20,7 +20,10 @@ public class Ceil extends BaseFunction {
         }
         return null;
     }
-
+    /*
+     * 0. Var name to store result
+     * *1. Value to ceil(if not given, returns ceil of first var)
+     */
     @Override
     public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);

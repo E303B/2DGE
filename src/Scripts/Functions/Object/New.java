@@ -7,6 +7,10 @@ import Scripts.Types.ScriptClass;
 import Shared.Start;
 
 public class New extends BaseFunction {
+    /*
+     * 0. Class parent
+     * 1. Var where value should be stored
+     */
     @Override
     public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);

@@ -6,7 +6,11 @@ import Scripts.Functions.BaseFunction;
 import Shared.Start;
 
 public class Const extends BaseFunction {
-
+    /*
+     * 0. Class name
+     * 1. Attribute name
+     * 2. Value
+     */
     @Override
     public void run(String functionParams, Object scriptParams, ScriptRunner runner) {
         Object[] params = parseAttributes(functionParams, runner);
@@ -19,7 +23,8 @@ public class Const extends BaseFunction {
                         .error("Object.Attribute.Const takes at least 3 argument, but " + params.length + " given");
         } catch (Exception e) {
             Start.mainRunner.mainLogger
-                    .error("Object.Attribute.Const throw " + e.getClass().getSimpleName() + ": " + e.getLocalizedMessage());
+                    .error("Object.Attribute.Const throw " + e.getClass().getSimpleName() + ": "
+                            + e.getLocalizedMessage());
         }
     }
 
