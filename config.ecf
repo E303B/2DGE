@@ -4,3 +4,4 @@ limitTPS=20
 texturesPath="./Resources/Textures"
 prototypesPath="./Resources/Prototypes"
 scriptsPath="./Resources/Scripts"
+audioPath="./Resources/Audio"

@@ -64,6 +64,7 @@ public class MainSystem {
         systems.add(new GameObjectSystem());
         systems.add(new TextureSystem());
         systems.add(new CameraSystem());
+        systems.add(new SoundSystem());
     }
 
     public BaseSystem getSystem(String name) {

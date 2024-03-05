@@ -12,6 +12,7 @@ public final class Start implements Runnable {
     public static String logs = "log.txt";
     public static Image icon = null;
     public static int limitTPS = 50;
+    public static String audioPath;
     public static String texturesPath;
 
     // Main global objects
@@ -58,6 +59,7 @@ public final class Start implements Runnable {
         logOnStart = (boolean) config.getValue("logOnStart", true);
         limitTPS = Integer.parseInt(config.getValue("limitTPS", 1).toString());
         texturesPath = (String) config.getValue("texturesPath", "");
+        texturesPath = (String) config.getValue("audioPath", "");
 
         if (logOnStart)
             mainLogger.log("Init engine");
