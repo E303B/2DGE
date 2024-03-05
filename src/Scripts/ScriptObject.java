@@ -9,8 +9,17 @@ public class ScriptObject {
     ArrayList<Var> attributes;
     public ScriptClass parent;
 
-    public int size(){
+    public int size() {
         return attributes.size();
+    }
+
+    @Override
+    public String toString() {
+        String temp = "";
+        for (Var var : attributes) {
+            temp += var.getData().toString();
+        }
+        return temp;
     }
 
     public ScriptObject() {
@@ -20,13 +29,13 @@ public class ScriptObject {
 
     public ScriptObject(ScriptClass parent) {
         this.parent = parent;
-        this.attributes= new ArrayList<Var>();
-        for(Var var:parent.getAttributes()){
+        this.attributes = new ArrayList<Var>();
+        for (Var var : parent.getAttributes()) {
             this.attributes.add(new Var(var.name, var.type, var.constant, var.getData()));
         }
     }
 
-    public Object getAttribute(String name){
+    public Object getAttribute(String name) {
         for (Var var : attributes) {
             if (var.name.equals(name))
                 return var.getData();
@@ -71,8 +80,7 @@ public class ScriptObject {
     }
 
     public void setAttribute(String name, Object value) {
-        for (Var var : attributes) 
-        {
+        for (Var var : attributes) {
             if (var.name.equals(name)) {
                 var.trySetData(value);
                 break;

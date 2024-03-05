@@ -67,13 +67,13 @@ public final class ScriptRunner implements Runnable {
     public void deleteVar(String name) {
         if (parent == null) {
             for (Var var : variables) {
-                if(var.name.equals(name)){
+                if (var.name.equals(name)) {
                     variables.remove(var);
                     return;
                 }
             }
-        }
-        else parent.deleteVar(name);
+        } else
+            parent.deleteVar(name);
     }
 
     public java.lang.Object getVar(java.lang.String name) {
@@ -98,6 +98,7 @@ public final class ScriptRunner implements Runnable {
         defaultPackages.add(new Scripts.Packages.Class.Class());
         defaultPackages.add(new Scripts.Packages.Object.Object());
         defaultPackages.add(new Scripts.Packages.Func());
+        defaultPackages.add(new Scripts.Packages.String.String());
 
         defaultFunctions.add(new Scripts.Functions.If());
         defaultFunctions.add(new Scripts.Functions.Param());
